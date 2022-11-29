@@ -1,0 +1,143 @@
+﻿@model Salony.Models.ControllerDTO.SettingsDTO
+
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <div class="card-box" style="padding: 80px 20px 40px;">
+            <div class="row">
+                <form asp-action="Edit2">
+                    <h2 class="header-title m-t-0 m-b-30" style="text-align:center">الاعدادات</h2>
+
+                    @if (!string.IsNullOrEmpty(ViewBag.Msg))
+                    {
+                        <div style="text-align:center" class="alert alert-success">
+                            <strong style="font-size:larger">@ViewBag.Msg  </strong>
+                        </div>
+                    }
+
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ID" />
+                    <div class="form-group">
+                        <label asp-for="aboutAppAr" class="control-label">عن التطبيق بالعربية</label>
+                        <input asp-for="aboutAppAr" class="form-control mytexteditor" />
+                        @*<input id="AboutAppAr" class="form-control mytexteditor" />*@
+                        <span asp-validation-for="aboutAppAr" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="aboutAppEn" class="control-label">عن التطبيق بالانجليزية</label>
+                        <input asp-for="aboutAppEn" class="form-control mytexteditor" />
+                        <span asp-validation-for="aboutAppEn" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="condtionsAr" class="control-label">الشروط و الاحكام بالعربية</label>
+                        <input asp-for="condtionsAr" class="form-control mytexteditor" />
+                        <span asp-validation-for="condtionsAr" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="condtionsEn" class="control-label">الشروط و الاحكام بالانجليزية</label>
+                        <input asp-for="condtionsEn" class="form-control mytexteditor" />
+                        <span asp-validation-for="condtionsEn" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="paymentPolicyAr" class="control-label">سياسة الدفع بالعربية</label>
+                        <input asp-for="paymentPolicyAr" class="form-control mytexteditor" />
+                        <span asp-validation-for="paymentPolicyAr" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="paymentPolicyEn" class="control-label">سياسة الدفع بالانجليزية</label>
+                        <input asp-for="paymentPolicyEn" class="form-control mytexteditor" />
+                        <span asp-validation-for="paymentPolicyEn" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input onclick="Validtion()" @*type="submit"*@ value="حفظ" class="btn-new-style" style="cursor:pointer;" />
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/HtmlEditor/tinymce.min.js"></script>
+
+<script>
+    tinymce.init({
+        selector: '.mytexteditor'
+    });
+
+    function Validtion() {
+
+        var flg = true;
+        //if ($("#AboutAppAr").val() == "") {
+        //    toastr.error("من فضلك هذا الحقل  مطلوب ");
+        //    $("#AboutAppAr").focus();
+        //    flg = false;
+        //    return false;
+        //}
+        //if ($("#AboutAppEn").val() == "") {
+        //    toastr.error("من فضلك هذا الحقل  مطلوب ");
+        //    $("#AboutAppEn").focus();
+        //    flg = false;
+        //    return false;
+        //} if ($("#CondtionsAr").val() == "") {
+        //    toastr.error("من فضلك هذا الحقل  مطلوب ");
+        //    $("#CondtionsAr").focus();
+        //    flg = false;
+        //    return false;
+        //} if ($("#CondtionsEn").val() == "") {
+        //    toastr.error("من فضلك هذا الحقل  مطلوب ");
+        //    $("#CondtionsEn").focus();
+        //    flg = false;
+        //    return false;
+        //}
+
+        var obj = {
+            aboutAppAr: tinymce.get("aboutAppAr").getContent(),
+            aboutAppEn: tinymce.get("aboutAppEn").getContent(),
+            condtionsAr: tinymce.get("condtionsAr").getContent(),
+            condtionsEn: tinymce.get("condtionsEn").getContent(),
+            paymentPolicyAr: tinymce.get("paymentPolicyAr").getContent(),
+            paymentPolicyEn: tinymce.get("paymentPolicyEn").getContent(),
+        }
+        debugger;
+        if (flg == true) {
+
+            $.ajax({
+                url: "/DSettings/Edit2",
+                data: JSON.stringify(obj),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result.key == 1) {
+                        Swal.fire({
+                            position: 'success',
+                            type: 'success',
+                            title: 'تم التعديل بنجاح..',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    } else {
+
+                        Swal.fire({
+                    position: 'error',
+                    type: 'error',
+                            title: ' يرجى التاكد من جميع البيانات..',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+                    }
+
+                },
+                error: function (errormessage) {
+                    return;
+                }
+            });
+        }
+    }
+
+</script>

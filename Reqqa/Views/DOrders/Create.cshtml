@@ -1,0 +1,136 @@
+﻿@model Salony.Models.ControllerDTO.OrderDTO
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <div class="card-box" style="padding: 80px 20px 40px;">
+            <div class="row">
+
+                <h2 class="header-title m-t-0 m-b-30" style="text-align:center"> اضافة طلب جديد</h2>
+
+                <form enctype="multipart/form-data" asp-action="Create" asp-controller="DOrders" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-horizontal">
+                        <hr />
+                        <input type="hidden" asp-for="FK_ProviderID" value="@ViewData["id"]" />
+
+                        <!----------------------------------------------------------------------------->
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="date" class="control-label"></label>
+                                <input asp-for="date" class="form-control" />
+                                <span asp-validation-for="date" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="status" class="control-label"></label>
+                                <select id="status" asp-for="status" class="form-control">
+                                    <option selected value="">اختر حالة الطلب</option>
+                                    <option value="0">انتظار</option>
+                                    <option value="1">مقبول</option>
+                                    <option value="2">منتهى</option>
+                                    <option value="3">مرفوض</option>
+                                    <option value="4">ملغى</option>
+                                </select>
+                                <span asp-validation-for="status" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="typePay" class="control-label"></label>
+                                <select id="typePay" asp-for="typePay" class="form-control">
+                                    <option selected value="">اختر طريقة الدفع</option>
+                                    <option value="0">كاش</option>
+                                    <option value="1">أون لاين</option>
+                                </select>
+                                <span asp-validation-for="typePay" class="text-danger"></span>
+                            </div>
+                        </div>
+                        @*<div class="col-md-4">
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="returnMoney" /> @Html.DisplayNameFor(model => model.returnMoney)
+                                </label>
+                            </div>
+                        </div>*@
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="copon" class="control-label"></label>
+                                <input asp-for="copon" class="form-control" />
+                                <span asp-validation-for="copon" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="discountPercentage" class="control-label"></label>
+                                <input asp-for="discountPercentage" class="form-control" />
+                                <span asp-validation-for="discountPercentage" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="priceBeforeDisc" class="control-label"></label>
+                                <input asp-for="priceBeforeDisc" class="form-control" />
+                                <span asp-validation-for="priceBeforeDisc" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="price" class="control-label"></label>
+                                <input asp-for="price" class="form-control" />
+                                <span asp-validation-for="price" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="paid" /> @Html.DisplayNameFor(model => model.paid)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="rate" class="control-label"></label>
+                                <input asp-for="rate" class="form-control" />
+                                <span asp-validation-for="rate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="refusedReason" class="control-label"></label>
+                                <input asp-for="refusedReason" class="form-control" />
+                                <span asp-validation-for="refusedReason" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="submit" value="اضافة" class="btn-new-style btn-rounded" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            @*<div>
+                                @Html.ActionLink("العودة الى الرئيسية", "Cities", new { id = ViewData["id"] }, new { @class = "btn-black" })
+                            </div>*@
+                            <div class="text-center">
+                                @Html.ActionLink("العودة الى الرئيسية", "Index", new { id = ViewData["id"] }, new { @class = "btn btn-black btn-rounded w-md waves-effect waves-light m-b-5" })
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+

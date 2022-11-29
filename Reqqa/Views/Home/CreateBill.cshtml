@@ -1,0 +1,153 @@
+﻿@model Salony.ViewModels.CreateBillViewModel
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="ar">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+
+    <style>
+
+    @@font-face { font-family: 'myFont';
+                  src: url('../../assets/fonts/JF-Flat-regular.ttf'); }
+
+        body {
+            direction: rtl;
+            text-align: right;
+            font-family: "myFont";
+            word-spacing: 1px;
+            background: #FFFFFF;
+            color: #000000;
+            font-size: 17px;
+            line-height: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+           
+        }
+
+        .text-center{text-align: center}
+
+        .thepay {
+            padding: 20px;
+            border: 1px solid #EEE;
+            border-radius: 20px;
+            box-shadow: 0px 0px 10px 0px #d2c6dc;
+            margin: 40px 10px;
+            background: aliceblue;
+            max-width: 650px;
+        }
+
+        .over{
+            overflow: hidden;
+        }
+
+        .float_L{float: left}
+        .float_R{float: right}
+
+
+
+        table{margin: 20px 0px;
+              width: 100%;
+              text-align: center}
+
+        th{
+            padding: 12px 5px;
+            border-top: 1px dashed #000;
+            border-bottom: 1px dashed #000;
+            width : 10%
+        }
+
+        td{padding: 5px}
+
+        tr:last-child td{border-bottom: 1px dashed #000}
+
+        h1, h2, h3, h4, h5, h6 {margin : 0px;
+                                margin-bottom: 15px
+        }
+
+        .mb-10{margin-bottom: 10px}
+
+
+    </style>
+
+
+</head>
+
+<body>
+
+
+
+    <div class="thepay">
+        <h3 class="text-center">فاتورة</h3>
+        <h5 class="text-center">رقم الفاتورة <span>@Model.id</span></h5>
+
+        <div class="text-center">
+            <h5>اسم المتجر</h5>
+            <h6>@Model.providerName</h6>
+        </div>
+
+        <div class="over mb-10">
+            <div class="float_R">التاريخ : <span>@Model.date</span></div>
+            <div class="float_L">الوقت : <span>@Model.time</span></div>
+        </div>
+        <div>الرقم الضريبي : <span>@Model.commercialRegister</span></div>
+
+
+
+        <table>
+            <tr>
+                <th>نوع الخدمة</th>
+                <th>السعر</th>
+                <th>الوقت</th>
+                <th>التاريخ</th>
+                <th>العنوان</th>
+
+            </tr>
+
+            @foreach (var service in Model.services)
+            {
+                <tr>
+                    <td>@service.name</td>
+                    <td>@service.price ر.س</td>
+                    <td>@service.time</td>
+                    <td>@service.date</td>
+                    <td>@service.address</td>
+                </tr>
+            }
+
+        </table>
+
+        <div class="over mb-10">
+            <div class="float_R">المجموع قبل الخصم (ريال)</div>
+            <div class="float_L">@Model.priceBeforeDisc</div>
+        </div>
+        <div class="over mb-10">
+            <div class="float_R">المجموع (ريال)</div>
+            <div class="float_L">@Model.price</div>
+        </div>
+
+        <div class="over">
+            <div class="float_R">يشمل ضريبة القيمة المضافة (5%)</div>
+            <div class="float_L">@Model.tax</div>
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+</body>
+
+</html>

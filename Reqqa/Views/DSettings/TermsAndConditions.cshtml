@@ -1,0 +1,78 @@
+﻿@model Salony.Models.ControllerDTO.TermsAndConditionsDTO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-sm-12">
+
+    <div class="card-box" style="padding: 80px 20px 40px;">
+        <div class="row">
+
+            <h2 class="header-title m-t-0 m-b-30" style="text-align:center">الاعدادات  </h2>
+            @if (!string.IsNullOrEmpty(ViewBag.Msg))
+            {
+                <div style="text-align:center" class="alert alert-success">
+                    <strong style="font-size:larger">@ViewBag.Msg  </strong>
+                </div>
+            }
+
+        <form enctype="multipart/form-data" asp-action="TermsAndConditions" method="post">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+          
+
+            <div class="col-md-6">
+                <label asp-for="ContentDataAR" class="control-label">الشروط والاحكام بالعربية</label>
+                <textarea class="form-control" type="textarea" name="ContentDataAR" id="ContentDataAR" placeholder="Message" maxlength="20" rows="4">
+@Model.ContentDataAR
+</textarea>
+                <span asp-validation-for="ContentDataAR" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Media_Description2" class="control-label">الشروط والاحكام بالانجليزية</label>
+                <textarea class="form-control" type="textarea" name="Media_Description2" id="Media_Description2" placeholder="Message" maxlength="140" rows="4">
+@Model.Media_Description2
+</textarea>
+                <span asp-validation-for="Media_Description2" class="text-danger"></span>
+            </div>
+
+
+            <div class="col-md-12">
+                <div class="form-group">
+
+                    <input type="submit" value="تعديل" onclick="Validtion()" class="btn-new-style" />
+
+                </div>
+            </div>
+
+        </form>
+        </div>
+    </div>
+
+
+</div>
+
+
+@section scripts{
+
+
+    <script src="~/HtmlEditor/tinymce/tinymce.min.js"></script>
+    <script src="~/js/HtmlEditorPlugin.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $(".alert").fadeOut();
+            }, 3000);
+
+        })
+    </script>
+
+
+    @*<script src="~/Content/HtmlEditor/tinymce.min.js"></script>
+        <script src="~/Content/js/HtmlEditorPlugin.js"></script>*@
+
+}

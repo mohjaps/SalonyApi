@@ -1,0 +1,54 @@
+﻿@model Salony.Models.ControllerDTO.MainServicesDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="col-sm-12">
+
+    <div class="card-box" style="padding: 80px 20px 40px;">
+        <div class="row">
+
+            <h2 class="header-title m-t-0 m-b-30" style="text-align:center">اضافة خدمة </h2>
+            <form enctype="multipart/form-data" asp-action="Create" method="post">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <input type="hidden" name="FK_CategoryID" value="@ViewBag.FkCategoryId" hidden class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="nameAr" class="control-label">الاسم بالعربية</label>
+                    <input asp-for="nameAr" class="form-control" />
+                    <span asp-validation-for="nameAr" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="nameEn" class="control-label">الاسم بالانجليزية </label>
+                    <input asp-for="nameEn" class="form-control" />
+                    <span asp-validation-for="nameEn" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+
+                        <input type="submit" value="اضافة" onclick="Validtion()" class="btn-new-style" />
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}
+

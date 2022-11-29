@@ -1,0 +1,154 @@
+﻿@model IEnumerable<Core.TableDb.Sliders>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h4 class="header-title m-t-0 m-b-30"></h4>
+            <div class="row">
+
+                <!-- -------------------------------------------------------------------------------------------------- -->
+
+                <p>
+                    @Html.ActionLink("اضافة إعلان جديد", "Create", "DSliderhome", null, new { @class = "btn btn-primary btn-rounded w-md waves-effect waves-light m-b-5" })
+                </p>
+                <h2 style="text-align:center">الإعلانات الرئيسية</h2>
+
+                <table id="datatable-responsive2" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <thead style="text-align:center">
+                        <tr>
+                            <th style="text-align:center">
+                                #
+                            </th>
+                            <th style="text-align:center">
+                                الصورة
+                            </th>
+                            <th style="text-align:center">
+                                الحالة
+                            </th>
+                            <th style="text-align:center">
+                                تغير الحالة
+                            </th>
+                            <th style="text-align:center">
+                                تعديل
+                            </th>
+                            <th style="text-align:center">
+                                حذف
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align:center">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.ID
+                                </td>
+                                <td>
+                                    <img src="/@item.img" height="80" width="80px" />
+                                </td>
+                                <td>
+                                    @{
+                                        if (item.isActive == true)
+                                        {
+                                            <label id="@item.ID" style="color:green;font-size: 17px;">مفعل</label>
+                                        }
+                                        else
+                                        {
+                                            <label id="@item.ID" style="color:red;font-size: 17px;">غير مفعل</label>
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <input type="button" value="تغير الحالة" onclick="ChangeStatus('@item.ID')" class="btn btn-purple btn-rounded" />
+                                </td>
+                                <td>
+                                    <a class="icon-font btn" asp-action="Edit" asp-route-id="@item.ID">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+
+                                    </a>
+                                </td>
+                                <td>
+                                   <input type="button" onclick="deleteSocial(@item.ID)" class="btn btn-danger btn-rounded" value="حذف" />
+                                 </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div><!-- end row -->
+        </div>
+    </div><!-- end col -->
+</div>
+
+
+
+@section scripts{
+
+    <script>
+
+        function ChangeStatus(id) {
+            $.post('/DSliderhome/ChangeStatus', { id: id }, function (response) {
+                if (response == true) {
+                    $('#' + id).css('color', 'green');
+                    $('#' + id).html('مفعل');
+                } else if (response == false) {
+                    $('#' + id).css('color', 'red');
+                    $('#' + id).html('غير مفعل');
+                }
+            });
+        }
+
+         function deleteSocial(id) {
+                $.ajax({
+                    url: "/DSliderhome/Delete?id=" + id,
+                    type: "DELETE",
+                    success: function (result) {
+                        toastr.success("تم الحذف بنجاح");
+                        setTimeout(location.reload(), 2000);
+                    },
+                    failure: function (info) {
+                        console.log(info);
+                        toastr.warning("حدث خطأ ما");
+                    }
+                });
+        }
+
+
+        $(document).ready(function () {
+
+            $('#datatable-responsive2').DataTable({
+                searching: false,
+                "language": {
+                    "sProcessing": "جارٍ التحميل...",
+                    "sLengthMenu": "أظهر _MENU_ مدخلات",
+                    "sZeroRecords": "لم يعثر على أية سجلات",
+                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+                    "sInfoPostFix": "",
+                    "sSearch": "ابحث:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "الأول",
+                        "sPrevious": "السابق",
+                        "sNext": "التالي",
+                        "sLast": "الأخير"
+                    }
+                }, "order": [],
+                "dom": 'Bflrtip',
+                buttons: [
+
+                ]
+
+            });
+
+
+        });
+
+    </script>
+
+}

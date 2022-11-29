@@ -1,0 +1,67 @@
+﻿@model Salony.Models.ControllerDTO.BankAccountDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="col-sm-12">
+
+    <div class="card-box" style="padding: 80px 20px 40px;">
+        <div class="row">
+
+            <h2 class="header-title m-t-0 m-b-30" style="text-align:center">اضافة حساب بنكى </h2>
+            <form enctype="multipart/form-data" asp-action="Create" method="post">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+
+                <div class="form-group">
+                    <label asp-for="bankNameAr" class="control-label">اسم البنك بالعربية</label>
+                    <input asp-for="bankNameAr" class="form-control" />
+                    <span asp-validation-for="bankNameAr" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="bankNameEn" class="control-label">اسم البنك بالانجليزية </label>
+                    <input asp-for="bankNameEn" class="form-control" />
+                    <span asp-validation-for="bankNameEn" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="bankAccountNumber" class="control-label">رقم الحساب البنكى </label>
+                    <input asp-for="bankAccountNumber" class="form-control" />
+                    <span asp-validation-for="bankAccountNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="OwnerName" class="control-label">صاحب الحساب  </label>
+                    <input asp-for="OwnerName" class="form-control" />
+                    <span asp-validation-for="OwnerName" class="text-danger"></span>
+                </div>
+
+
+
+
+                <div class="col-md-12">
+                    <div class="form-group">
+
+                        <input type="submit" value="اضافة" onclick="Validtion()" class="btn-new-style" />
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}
+

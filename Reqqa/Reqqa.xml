@@ -1,0 +1,426 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Salony</name>
+    </assembly>
+    <members>
+        <member name="M:Salony.Controllers.API.WorkersController.NewWorker(Salony.ViewModels.Workers.NewWorker)">
+            <summary>
+            الايام التي يداوم فيا الموظف
+            </summary>
+            <remarks>
+            القيم المسموح ادخالها [Saturday, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday]
+            
+            مثال: saturday,monday,thursday
+            </remarks>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Salony.Helper.Helper.distanceBetweenThemInOrder(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.App.AboutAppDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.App.ContactUsDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.RegisterClientDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.RegisterProviderDTO.salonType">
+            <summary>
+            1 => salon , 2 => home , 3 => both
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.RegisterProviderDTO.SalonUsersType">
+            <summary>
+            0 => both , 1 => men , 2 => women
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.RegisterProviderDTO.idNumber">
+            <summary>
+            رقم الهوية
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.RegisterProviderDTO.bankName">
+            <summary>
+            اسم البنك
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.RegisterProviderDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.ConfirmCodeRegisterDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.LoginDTO.type_user">
+            <summary>
+            client = 1, provider = 2
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.LoginDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.UpdateDataUserDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.ChangePasswordDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.ForgetPasswordDTO.type_user">
+            <summary>
+            client = 1, provider = 2
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.ForgetPasswordDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.ResendCodeDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.ChangePasswordByCodeDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.LogoutDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.ChangeLanguageDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.ListCategoriesDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.ListBoutiquesDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.SearchDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.SearchByServiceDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.ListMainServicesDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.FilterBoutiquesDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.GetBoutiqueDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.AddToCartDTO.date">
+            <summary>
+            dd/MM/yyyy
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.AddToCartDTO.time">
+            <summary>
+            h:mm tt
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.AddToCartDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.GetCartDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.GetCartWithDetailsDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.DeleteServiceFromCartDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.SaveOrderDTO.type_pay">
+            <summary>
+            0 => cash , 1 => online
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.SaveOrderDTO.date">
+            <summary>
+            dd/MM/yyyy
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.SaveOrderDTO.time">
+            <summary>
+            HH:mm tt
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.SaveOrderDTO.Notes">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>    
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.ListOrdersDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.ListAllOrdersDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.PayOrderDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.CancelOrderDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.RateOrderDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.GetOrderDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.ListNotificationsDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.DeleteNotificationsDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.GetDiscountPercentageDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.FillDataDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Client.GetankAccountsDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.GetRegisterDataDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.ListProviderMainServicesDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.AddSubServiceDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.EditSubServiceDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.DeleteSubServiceDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.GetCurrentBoutiqueDataDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.GetCurrentBoutiqueAppPrecentDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.ListProviderOffersDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.AddProviderOfferDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.DeleteProviderOfferDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.ListProviderOrdersDTO.type">
+            <summary>
+              waiting = 0,
+              accepted = 1,
+              finished = 2,
+              refused = 3,
+              canceled = 4
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.ListProviderOrdersDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.GetOrderDetailsDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.ChangeOrderStatusDTO.type">
+            <summary>
+              waiting = 0,
+              accepted = 1,
+              finished = 2,
+              refused = 3,
+              canceled = 4
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.ChangeOrderStatusDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.GetProviderDataDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.UpdateProviderDataDTO.idNumber">
+            <summary>
+            رقم الهوية
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.UpdateProviderDataDTO.bankName">
+            <summary>
+            اسم البنك
+            </summary>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.UpdateProviderDataDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.CountProviderOrdersDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+        <member name="P:Salony.Models.ApiDTO.Provider.DeleteProviderNotifyDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+             <example>ar</example>
+        </member>
+    </members>
+</doc>

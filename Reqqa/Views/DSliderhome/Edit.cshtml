@@ -1,0 +1,91 @@
+﻿@model Salony.Models.ControllerDTO.SlidersEditDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="col-sm-12">
+
+    <div class="card-box" style="padding: 80px 20px 40px;">
+        <div class="row">
+
+            <h2 class="header-title m-t-0 m-b-30" style="text-align:center">تعديل </h2>
+            <form enctype="multipart/form-data" asp-action="Edit" method="post">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID" />
+                <input type="hidden" asp-for="DisplayImg" />
+
+
+
+                <div class="form-group">
+                    <label asp-for="isActive" class="control-label">مفعل </label>
+                    <input asp-for="isActive" class="form-control" />
+                    <span asp-validation-for="isActive" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">الصورة الحالية</label>
+                    <div class="col-md-10">
+                        <img id="output" src="~/@Model.DisplayImg" width="50px" height="50px" />
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">الصورة الجديدة</label>
+                    <div class="col-md-10">
+                        <input type="file" asp-for="img" class="form-control" />
+                        <span asp-validation-for="img" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                @if (ViewBag.branchId == 9)
+                {
+
+                    <div class="form-group">
+                        <label asp-for="ProviderId" class="control-label">مقدم الخدمة</label>
+                        <select asp-for="ProviderId"
+                                class="form-control"
+                                asp-items="@ViewBag.Providers">
+                            <option value="0" selected="selected">من فضلك اختر مقدم الخدمة</option>
+                        </select>
+                        <span asp-validation-for="ProviderId" class="text-danger"></span>
+                    </div>
+                }
+
+
+
+
+                <div class="col-md-12">
+                    <div class="form-group">
+
+                        <input type="submit" value="حفظ" onclick="Validtion()" class="btn-new-style" />
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+
+    <script>
+        document.getElementById('img').onchange = function (event) {
+            var image = document.getElementById('output');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        }
+
+    </script>
+}
+

@@ -1,0 +1,776 @@
+﻿@using System.Security.Claims
+@using Core.TableDb
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationDbUser> SignInManager
+@inject UserManager<ApplicationDbUser> UserManager
+@{
+
+    var userId = UserManager.GetUserId(User);
+    var user = await UserManager.FindByIdAsync(userId);
+}
+
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard.">
+    <meta name="author" content="Coderthemes">
+
+    @*<link rel="shortcut icon" href="~/images/logo.png">*@
+    <link rel="shortcut icon" href="~/Site/imges/logo1.png" />
+    <title>لوحة التحكم</title>
+
+    <!--Morris Chart CSS -->
+    @*<link rel="stylesheet" href="~/assets/plugins/morris/morris.css">*@
+
+    <!-- DataTables -->
+    <link href="~/assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css" />*@
+    <link href="~/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/assets/plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css" />*@
+
+    <!-- Custom box css -->
+    <link href="~/assets/plugins/custombox/dist/custombox.min.css" rel="stylesheet">
+
+    @*--------------------------- button of datatable   -------------------------*@
+    <link href="~/assets/plugins/DataTable/dataTables.min.css" rel="stylesheet" />
+    @*--------------------------- button of datatable   -------------------------*@
+
+    <link href="~/assets/css/bootstrap-rtl.min.css" rel="stylesheet" type="text/css" />
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />*@
+
+    <link href="~/assets/css/select-2.css" rel="stylesheet" />
+    <link href="~/assets/css/tempusdominus-bootstrap-3.min.css" rel="stylesheet" />
+    <link href="~/assets/css/core.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/components.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/pages.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/menu.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/css/toastr.min.css" rel="stylesheet" />*@
+    <link href="~/assets/plugins/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="~/assets/css/jquery.fancybox.min.css" rel="stylesheet" />
+    <link href="~/assets/css/new-style.css" rel="stylesheet" />
+
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="~/assets/js/modernizr.min.js"></script>
+
+
+
+
+
+</head>
+
+
+
+<body class="fixed-left">
+
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- Top Bar Start -->
+        <div class="topbar">
+
+            <!-- LOGO -->
+            <div class="topbar-left skin-background2">
+                <a href="/" class="logo"><span>أوامر<span> الشبكة </span></span><i class="zmdi zmdi-layers"></i></a>
+            </div>
+
+            <!-- Button mobile view to collapse sidebar menu -->
+            <div class="navbar navbar-default skin-background2" role="navigation">
+                <div class="container">
+
+                    <!-- Page title -->
+                    <ul class="nav navbar-nav navbar-left">
+                        <li>
+                            <button class="button-menu-mobile open-left">
+                                <i class="zmdi zmdi-menu"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <h4 class="page-title">  لوحة التحكم @*| رقة*@   </h4>
+                        </li>
+                    </ul>
+
+                    <!-- Right(Notification and Searchbox -->
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+
+                            <!-- Notification -->
+                            <div class="notification-box" style="display:none">
+                                <ul class="list-inline m-b-0">
+                                    <li>
+                                        <a href="javascript:void(0);" class="right-bar-toggle" onclick="ShowNotif()">
+                                            <i class="zmdi zmdi-notifications-none"></i>
+                                        </a>
+
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- End Notification bar -->
+
+                        </li>
+
+                        <li class="hidden-xs" style="display:none">
+                            <form role="search" class="app-search">
+                                <input type="text" placeholder="Search..."
+                                       class="form-control">
+                                <a href=""><i class="fa fa-search"></i></a>
+                            </form>
+                        </li>
+                    </ul>
+
+
+                </div><!-- end container -->
+            </div><!-- end navbar -->
+        </div>
+        <!-- Top Bar End -->
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="left side-menu skin-background">
+            <div class="sidebar-inner slimscrollleft">
+
+                <!-- User -->
+                <div class="user-box">
+                    <a asp-area="Identity" asp-page="/Account/EditUser">
+                        <div class="user-img">
+                            <img style="height: 100%;width: 100%;" src="/@user.img" alt="user-img" class="img-circle img-thumbnail img-responsive">
+                            <div class="user-status offline"><i class="zmdi zmdi-dot-circle"></i></div>
+                        </div>
+                    </a>
+                    <h5><a href="#"></a> </h5>
+                    <ul class="list-inline">
+                        <li>
+                            <a asp-area="Identity" asp-page="/Account/EditUser">Hello @User.Identity.Name!</a>
+                            <a asp-area="Identity" asp-page="/Account/EditUser">
+                                <i class="zmdi zmdi-settings"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" method="post">
+
+                                <button type="submit" class="skin-background2">
+                                    <i class="zmdi zmdi-power"></i>
+                                </button>
+
+                            </form>
+
+                        </li>
+                    </ul>
+                </div>
+                <!-- End User -->
+                <!--- Sidemenu -->
+                <div id="sidebar-menu">
+
+                    <!--Slider-->
+                    <ul>
+                        <li style="display:none" class="text-muted menu-title">Navigation</li>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                    <i class="zmdi zmdi-home"></i>
+                                    <span>لوحة التحكم</span>
+                                </a>
+                            </li>
+                        }
+
+                       @* @if (User.IsInRole(Salony.Enums.AllEnums.Roles.SuperAdmin.ToString()))
+                        {
+                            <li>
+                                <a class="nav-link" asp-area="" asp-controller="DBranches" asp-action="Index">
+                                    <i class="zmdi zmdi-home"></i>
+                                    الفروع
+                                </a>
+                            </li>
+                        }*@
+
+                        @if (User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.SpacePrice.ToString()))
+                        {
+                            @if (user.FK_BranchID == 6)
+                            {
+                                <li>
+                                    <a class="nav-link" asp-area="" asp-controller="ServiceDelivery" asp-action="Index">
+                                        <i class="zmdi zmdi-home"></i>
+                                        التوصيل بناءا على المسافة
+                                    </a>
+                                </li>
+                            }
+                        }
+
+
+                        @if (User.IsInRole(Salony.Enums.AllEnums.Roles.Users.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()))
+                        {
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-collection-text"></i><span class="label label-warning pull-right"></span><span> مستخدمين التطبيق</span> </a>
+                                <ul class="list-unstyled" style="">
+                                    <li>
+                                        <a asp-area="" asp-controller="DClients" asp-action="Index" class="waves-effect"><i class="zmdi zmdi-roller"></i> <span>  العملاء</span> </a>
+                                        <a asp-area="" asp-controller="DProviders" asp-action="Index" class="waves-effect"><i class="zmdi zmdi-accounts-add"></i> <span> المشاغل</span> </a>
+
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+
+
+                        @if ((User.IsInRole(Salony.Enums.AllEnums.Roles.Orders.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString())))
+                        {
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-collection-text"></i><span class="label label-warning pull-right"></span><span> الطلبات</span> </a>
+                                <ul class="list-unstyled" style="">
+                                    <li>
+                                        <a asp-area="" asp-controller="DOrders" asp-action="Index" class="waves-effect"><i class="zmdi zmdi-accounts-add"></i> <span>  كل الطلبات </span> </a>
+
+                                        <a asp-area="" asp-controller="DOrders" asp-action="SalonyNewOrders" class="waves-effect"><i class="zmdi zmdi-accounts-add"></i> <span> الطلبات غير المدفوعة</span> </a>
+                                        <a asp-area="" asp-controller="DClients" asp-action="CartCountIndex" class="waves-effect"><i class="zmdi zmdi-accounts-add"></i> <span> الطلبات غير المكتملة </span> </a>
+
+                                    </li>
+                                </ul>
+                            </li>
+
+                        }
+
+
+                        @if (User.IsInRole(Salony.Enums.AllEnums.Roles.Sliders.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()))
+                        {
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-collection-text"></i><span class="label label-warning pull-right"></span><span> الاعلانات</span> </a>
+                                <ul class="list-unstyled" style="">
+                                    <li>
+                                        <a asp-area="" asp-controller="DSliderhome" asp-action="Index" class="waves-effect"><i class="zmdi zmdi-roller"></i> <span>اعلانات الرئيسية</span> </a>
+                                        <a asp-area="" asp-controller="DSlidersalons" asp-action="Index" class="waves-effect"><i class="zmdi zmdi-accounts-add"></i> <span> اعلانات الاقسام</span> </a>
+
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+
+                        @if (User.IsInRole(Salony.Enums.AllEnums.Roles.Categories.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()))
+                        {
+                            <li>
+                                <a class="nav-link" asp-area="" asp-controller="DCategories" asp-action="Index">
+                                    <i class="zmdi zmdi-home"></i>
+                                    الأقسام
+                                </a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole(Salony.Enums.AllEnums.Roles.Cities.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()))
+                        {
+                            <li>
+                                <a class="nav-link" asp-area="" asp-controller="DCities" asp-action="Index">
+                                    <i class="zmdi zmdi-home"></i>
+                                    المدن
+                                </a>
+                            </li>
+                        }
+                        @if ((User.IsInRole(Salony.Enums.AllEnums.Roles.BankAccounts.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString())))
+                        {
+                            <li>
+                                <a class="nav-link" asp-area="" asp-controller="DBankAccounts" asp-action="Index">
+                                    <i class="zmdi zmdi-home"></i>
+                                    الحسابات البنكية
+                                </a>
+                            </li>
+                        }
+                        @if (User.IsInRole(Salony.Enums.AllEnums.Roles.Notifications.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()))
+                        {
+                            <li>
+                                <a class="nav-link" asp-area="" asp-controller="DSendNotification" asp-action="Index">
+                                    <i class="zmdi zmdi-home"></i>
+                                    الاشعارات
+                                </a>
+                            </li>
+                        }
+                        @if (User.IsInRole(Salony.Enums.AllEnums.Roles.Copons.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()))
+                        {
+                            <li>
+                                <a class="nav-link" asp-area="" asp-controller="DCopons" asp-action="Index">
+                                    <i class="zmdi zmdi-home"></i>
+                                    اكواد الخصم
+                                </a>
+                            </li>
+                        }
+
+
+                        @* @if (User.IsInRole(Salony.Enums.AllEnums.Roles.Categories.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()))
+                        {
+                        <li>
+                        <a class="nav-link" asp-area="" asp-controller="DCategories" asp-action="Index">
+                        <i class="zmdi zmdi-home"></i>
+                        الاقسام
+                        </a>
+                        </li>
+                        }
+                        @if (User.IsInRole(Salony.Enums.AllEnums.Roles.Countries.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()))
+                        {
+                        <li>
+                        <a class="nav-link" asp-area="" asp-controller="DCountries" asp-action="Index">
+                        <i class="zmdi zmdi-home"></i>
+                        الدول
+                        </a>
+                        </li>
+                        }
+                        @if (User.IsInRole(Salony.Enums.AllEnums.Roles.Shapes.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()))
+                        {
+                        <li>
+                        <a class="nav-link" asp-area="" asp-controller="DShapes" asp-action="Index">
+                        <i class="zmdi zmdi-home"></i>
+                        الاشكال
+                        </a>
+                        </li>
+                        }
+                        @if (User.IsInRole(Salony.Enums.AllEnums.Roles.Packages.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()))
+                        {
+                        <li>
+                        <a class="nav-link" asp-area="" asp-controller="DPackages" asp-action="Index">
+                        <i class="zmdi zmdi-home"></i>
+                        الباقات
+                        </a>
+                        </li>
+                        }
+                        @if (User.IsInRole(Salony.Enums.AllEnums.Roles.requestVip.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()))
+                        {
+                        <li>
+                        <a class="nav-link" asp-area="" asp-controller="DVipRequests" asp-action="Index">
+                        <i class="zmdi zmdi-home"></i>
+                        طلبات الترقية
+                        </a>
+                        </li>
+                        }*@
+
+
+                        @*@if (User.IsInRole(OneBoutique.Helper.Helper.Roles.Advertsments.ToString()) || User.IsInRole(OneBoutique.Helper.Helper.Roles.Admin.ToString()))
+                        {
+                        <li>
+                        <a class="nav-link" asp-area="" asp-controller="DAdvertsments" asp-action="Index">
+                        <i class="zmdi zmdi-account"></i>
+                        <span>السلايدرات</span>
+                        </a>
+                        </li>
+                        }
+
+
+                        @if (User.IsInRole(OneBoutique.Helper.Helper.Roles.Brands.ToString()) || User.IsInRole(OneBoutique.Helper.Helper.Roles.Admin.ToString()))
+                        {
+                        <li>
+                        <a class="nav-link" asp-area="" asp-controller="DBrands" asp-action="Index">
+                        <i class="zmdi zmdi-home"></i>
+                        الماركات
+                        </a>
+                        </li>
+                        }
+                        @if (User.IsInRole(OneBoutique.Helper.Helper.Roles.Copons.ToString()) || User.IsInRole(OneBoutique.Helper.Helper.Roles.Admin.ToString()))
+                        {
+                        <li>
+                        <a class="nav-link" asp-area="" asp-controller="DCopons" asp-action="Index">
+                        <i class="zmdi zmdi-home"></i>
+                        الكوبونات
+                        </a>
+                        </li>
+                        }
+
+                        @if (User.IsInRole(OneBoutique.Helper.Helper.Roles.Specifications.ToString()) || User.IsInRole(OneBoutique.Helper.Helper.Roles.Admin.ToString()))
+                        {
+                        <li>
+                        <a class="nav-link" asp-area="" asp-controller="DSpecifications" asp-action="Index">
+                        <i class="zmdi zmdi-home"></i>
+                        الخصائص
+                        </a>
+                        </li>
+                        }
+                        @if (User.IsInRole(OneBoutique.Helper.Helper.Roles.Products.ToString()) || User.IsInRole(OneBoutique.Helper.Helper.Roles.Admin.ToString()))
+                        {
+                        <li>
+                        <a class="nav-link" asp-area="" asp-controller="DProducts" asp-action="Index">
+                        <i class="zmdi zmdi-home"></i>
+                        المنتجات
+                        </a>
+                        </li>
+                        }
+                        @if (User.IsInRole(OneBoutique.Helper.Helper.Roles.Orders.ToString()) || User.IsInRole(OneBoutique.Helper.Helper.Roles.Admin.ToString()))
+                        {
+                        <li>
+                        <a class="nav-link" asp-area="" asp-controller="DOrders" asp-action="Index">
+                        <i class="zmdi zmdi-home"></i>
+                        الطلبات
+                        </a>
+                        </li>
+                        }
+                        *@
+
+
+
+                        @if (User.IsInRole(Salony.Enums.AllEnums.Roles.Settings.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()))
+                        {
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-collection-text"></i><span class="label label-warning pull-right"></span><span> الاعدادات</span> </a>
+                                <ul class="list-unstyled" style="">
+                                    <li>
+                                        <a asp-area="" asp-controller="DSettings" asp-action="Edit" class="waves-effect"><i class="zmdi zmdi-roller"></i> <span>اعدادات الموقع</span> </a>
+                                        <a asp-area="" asp-controller="DSettings" asp-action="Edit2" class="waves-effect"><i class="zmdi zmdi-accounts-add"></i> <span> الشروط والاحكام</span> </a>
+
+                                    </li>
+                                </ul>
+                            </li>
+
+                        }
+                        @if (User.IsInRole(Salony.Enums.AllEnums.Roles.ContactUs.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()))
+                        {
+                            <li>
+                                <a class="nav-link" asp-area="" asp-controller="DContactUs" asp-action="Index">
+                                    <i class="zmdi zmdi-home"></i>
+                                    اتصل بنا
+                                </a>
+                            </li>
+                        }
+
+
+                        @if (User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()) || User.IsInRole(Salony.Enums.AllEnums.Roles.SuperAdmin.ToString()))
+                        {
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect">
+                                    <i class="fa fa-users" aria-hidden="true"></i>
+                                    <span class="label label-warning pull-right"></span>
+                                    <span> صلاحيات المستخدمين</span>
+                                </a>
+                                <ul class="list-unstyled" style="">
+                                    <li>
+                                        <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UserInRoles">
+                                            <i class="zmdi zmdi-settings"></i>
+                                            <span>اضافة صلاحية</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Identity/Account/register" class="nav-link">
+                                            <i class="zmdi zmdi-view-dashboard"></i>
+                                            <span> اضافة مستخدم</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+
+
+                    </ul>
+                    <!--end-->
+
+                    <div class="clearfix"></div>
+                </div>
+                <!-- Sidebar -->
+                <div class="clearfix"></div>
+
+            </div>
+
+        </div>
+        <!-- Left Sidebar End -->
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="content-page">
+            <!-- Start content -->
+            <div class="content">
+                <div class="container">
+
+                    <div class="row">
+                        @RenderBody()
+                    </div>
+
+                    <!-- end row -->
+
+
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+
+            <footer class="footer text-right">
+                أوامر الشبكة © 2021 - 2022
+            </footer>
+
+        </div>
+
+
+        <!-- ============================================================== -->
+        <!-- End Right content here -->
+        <!-- ============================================================== -->
+        <!-- Right Sidebar -->
+        <div class="side-bar right-bar">
+            <a href="javascript:void(0);" class="right-bar-toggle">
+                <i class="zmdi zmdi-close-circle-o"></i>
+            </a>
+            <h4 class="">الاشعارات</h4>
+
+        </div>
+        <!-- /Right-bar -->
+
+
+
+    </div>
+    <!-- END wrapper -->
+    <!-- Start Loading Page -->
+    <!------------------------loader--------------------------------->
+    <!--------------------------------------------------------->
+    <!-- Start body-content -->
+    @*<div class="layer-preloader">
+    <div class="lds-dual-ring"></div>
+    </div>*@
+
+    <!-- End Loading Page -->
+    @*<div class="change_color">
+
+    <ul>
+
+    <li data-color="#051860" class="active">
+
+    </li>
+    <li data-color="#20418a">
+
+    </li>
+
+    <li data-color="#096621">
+
+    </li>
+
+    <li data-color="#c56e26d9">
+
+    </li>
+
+    <li data-color="#f97068">
+
+    </li>
+
+    <li data-color="#FF7C1F">
+
+    </li>
+
+
+
+    <span data-toggle="tooltip" data-placement="right" title="تغيراللون">
+    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </span>
+
+    </ul>
+
+    </div>*@
+
+
+
+
+    <script>
+        var resizefunc = [];
+    </script>
+
+    <!-- jQuery  -->
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/bootstrap-rtl.min.js"></script>
+    <script src="~/assets/js/detect.js"></script>
+    <script src="~/assets/js/fastclick.js"></script>
+    <script src="~/assets/js/jquery.blockUI.js"></script>
+    <script src="~/assets/js/waves.js"></script>
+    <script src="~/assets/js/jquery.nicescroll.js"></script>
+    <script src="~/assets/js/jquery.slimscroll.js"></script>
+    <script src="~/assets/js/jquery.scrollTo.min.js"></script>
+    @*<script src="~/js/toastr.js"></script>*@
+    <script src="~/assets/plugins/toastr/toastr.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="~/assets/js/jquery.fancybox.min.js"></script>
+    @*<script src="~/js/notify.js"></script>*@
+
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>*@
+    <script src="~/assets/js/tempusdominus-bootstrap-3.min.js"></script>
+    <!-- Modal-Effect -->
+    <script src="~/assets/plugins/custombox/dist/custombox.min.js"></script>
+    <script src="~/assets/plugins/custombox/dist/legacy.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <!--Morris Chart-->
+    <!--Chartist Chart-->
+    <!-- KNOB JS -->
+    <!--[if IE]>
+    <script type="text/javascript" src="~/assets/plugins/jquery-knob/excanvas.js"></script>
+    <![endif]-->
+    <script src="~/assets/plugins/jquery-knob/jquery.knob.js"></script>
+
+    <!--Morris Chart-->
+    <!-- Datatables-->
+    <script src="~/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+
+    <script src="~/assets/plugins/datatables/dataTables.bootstrap.js"></script>
+
+
+    <script src="~/assets/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/assets/plugins/datatables/responsive.bootstrap.min.js"></script>
+    @*<script src="~/assets/plugins/datatables/dataTables.scroller.min.js"></script>*@
+
+    @*--------------------------- button of datatable   -------------------------*@
+    <script src="~/assets/plugins/DataTable/buttons.flash.min.js"></script>
+    <script src="~/assets/plugins/DataTable/buttons.html5.min.js"></script>
+    <script src="~/assets/plugins/DataTable/buttons.print.min.js"></script>
+    <script src="~/assets/plugins/DataTable/dataTables.buttons.min.js"></script>
+    @*<script src="~/assets/plugins/DataTable/dataTables.min.js"></script>*@
+    <script src="~/assets/plugins/DataTable/jszip.min.js"></script>
+    @*--------------------------- button of datatable   -------------------------*@
+
+
+
+    <!-- Datatable init js -->
+    <script src="~/assets/pages/datatables.init.js"></script>
+
+    <!-- App js -->
+    <script src="~/assets/js/jquery.core.js"></script>
+    <script src="~/assets/js/jquery.app.js"></script>
+    <script src="~/assets/js/select-2.js"></script>
+
+    @*<script type="text/javascript" src='https://maps.google.com/maps/api/js?libraries=places&key=AIzaSyB_oSewQNaoaW8F2_WxAC5eFwoeaZYpOHE&language=ar'></script>*@
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+            $('#datatable-responsive').DataTable({
+                "language": {
+                    "sProcessing": "جارٍ التحميل...",
+                    "sLengthMenu": "أظهر _MENU_ مدخلات",
+                    "sZeroRecords": "لم يعثر على أية سجلات",
+                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+                    "sInfoPostFix": "",
+                    "sSearch": "ابحث:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "الأول",
+                        "sPrevious": "السابق",
+                        "sNext": "التالي",
+                        "sLast": "الأخير"
+                    }
+                }, "order": [],
+                "dom": 'Bflrtip',
+
+                "buttons": ['copy', 'csv', 'excel', 'pdf', 'print']
+
+            });
+
+
+        });
+        TableManageButtons.init();
+
+        $(document).ready(function () {
+            toastr.options = {
+                "debug": false,
+                "positionClass": "toast-top-left",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 5000,
+                "extendedTimeOut": 1000
+            }
+        });
+    </script>
+    <script>
+        $(".select-2").select2();
+
+
+
+        //$(document).ajaxStart(function () {
+        //    startLoader();
+        //});
+
+        //$(document).ajaxStop(function () {
+        //    stopLoader();
+        //});
+    </script>
+
+
+
+
+    @RenderSection("scripts", required: false)
+
+    <!------------------------------------------------------------------------------------------------->
+
+
+    <script>
+
+
+        $(document).ready(function () {
+            if (localStorage.color != undefined) {
+                $("body").attr("data-progictColor", localStorage.color);
+
+            }
+
+            $(".change_color").delay(2000).animate({ "left": "-95px", opacity: "0.6" });
+
+            $(".change_color ul > span").on("click", function () {
+
+                $(this).toggleClass("active");
+
+                if ($(this).hasClass("active")) {
+
+                    $(this).parents(".change_color").css({ "left": "5px", "opacity": "1" });
+                    $(this).children().css({ "transform": "scale(-1)" });
+
+                } else {
+
+                    $(this).parents(".change_color").css({ "left": "-95px", "opacity": "0.6" });
+                    $(this).children().css({ "transform": "scale(1)" });
+
+                }
+
+            });
+
+            $(".change_color").on("click", function (e) {
+
+                e.stopPropagation();
+            });
+
+
+            $("body").on("click", function () {
+
+                if ($(".change_color ul > span").hasClass("active")) {
+
+                    $(".change_color ul > span").click();
+                }
+            });
+
+
+            $(".change_color ul > li").on("click", function () {
+
+                $(this).addClass("active").siblings("li").removeClass("active");
+            });
+
+
+            $(".change_color li").on("click", function () {
+
+                localStorage.color = $(this).attr("data-color");
+                $("body").attr("data-progictColor", localStorage.color);
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

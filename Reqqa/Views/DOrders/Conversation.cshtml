@@ -1,0 +1,156 @@
+﻿@model IEnumerable<Salony.Models.ControllerDTO.ListMessageTwoUsersToAdminViewModel>
+@{
+    ViewData["Title"] = "Conversation";
+}
+
+
+<style>
+    .fix_chat {
+        position: relative;
+    }
+
+    .group_chat {
+        flex-basis: 330px;
+        background-color: #FFFFFF;
+        flex-shrink: 0
+    }
+
+    .bar_chat button,
+    .open_chat_mobile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35px;
+        height: 35px;
+        color: #1444ad
+    }
+
+    .box_chat_user {
+        border-top: 1px solid gray;
+        cursor: pointer;
+        margin: 0px 5px
+    }
+
+        .box_chat_user.active {
+            background: #EEE
+        }
+
+        .box_chat_user p {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 300px;
+        }
+
+
+    .height_chat {
+        height: 500px;
+    }
+
+    .over_scroll_chat {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .view_all_chat {
+        position: relative
+    }
+
+    .no_chat {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #FFFFFF;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .body_chat {
+        border: 1px solid #1444ad
+    }
+
+    .sent_chat {
+        display: flex;
+        padding: 5px;
+        margin: 5px 0px
+    }
+
+        .sent_chat > div {
+            max-width: 65%;
+            padding: 10px;
+        }
+
+            .sent_chat > div > p {
+                margin-bottom: 10px
+            }
+
+    .content_receive {
+        justify-content: flex-end
+    }
+
+    .sent_chat .receive {
+        border-radius: 0px 10px 10px 10px;
+        background-color: #1444ad;
+        color: #FFFFFF
+    }
+
+    .sent_chat .sent {
+        border-radius: 10px 0px 10px 10px;
+        box-shadow: 3px 3px 3px 1px #EEE,-3px -3px 3px 1px #EEE
+    }
+</style>
+
+
+
+
+
+<div class="body_chat p-10">
+
+    <div class="chat-content over_scroll_chat height_chat">
+
+
+        @if (Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+                if (item.SenderId == ViewBag.FirstMessage)
+                {
+                    <div class="sent_chat content_sent">
+                        <div class="sent">
+                            <div>
+                                @item.SenderName
+                            </div>
+                            <p>@item.Message</p>
+                            <div class="d-flex justify-content-end">
+                                <span class="font_12 M_H_10">@item.Date</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="sent_chat content_receive">
+                        <div class="receive">
+                            <div>
+                                @item.SenderName
+                            </div>
+                            <p>@item.Message</p>
+                            <div class="d-flex">
+                                <span class="font_12">@item.Date</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+        }
+        else
+        {
+            <div>
+                لايوجد رسائل
+            </div>
+        }
+    </div>
+</div>

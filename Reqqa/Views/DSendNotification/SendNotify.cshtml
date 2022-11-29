@@ -1,0 +1,276 @@
+﻿
+@{
+    ViewBag.Title = "الاشعارات";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h2 style="text-align:center"> الاشعارات</h2>
+
+            <!-- -------------------------------------------------------------------------------------------------- -->
+
+
+            <div class="row">
+
+                <div class="col-md-4 new-flex-form">
+                    <div class="">
+                        <label style="display:block"> الكل</label>
+                        <input type="checkbox" id="allProviders" />
+
+                    </div>
+                    <div class="w-100" id="provider_div">
+                        <label>
+                            مقدمين الخدمة
+                        </label>
+                        <select class="select-2 form-control" id="multipleProviderSelect" multiple="multiple"></select>
+                    </div>
+                </div>
+                <div class="col-md-4 new-flex-form">
+                    <div class="">
+                        <label style="display:block"> الكل</label>
+                        <input type="checkbox" id="allEmployees" enabled />
+
+                    </div>
+                    <div class="w-100" id="employee_div">
+                        <label>
+                            العملاء
+                        </label>
+                        <select class="select-2 form-control" id="multipleEmployeeSelect" multiple="multiple"></select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group  new-flex-form">
+                        <label>
+                            نص الاشعار
+                        </label>
+                        <textarea class="form-control" id="notifyMessage" placeholder="اكتب النص هنا" required></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="text-center">
+                <button class=" btn-black btn-rounded w-md waves-effect waves-light m-b-5" id="send" onclick="Send();"> ارسال  </button>
+            </div>
+
+            <!-- -------------------------------------------------------------------------------------------------- -->
+
+
+        </div>
+        <div class="row">
+            <!-- end row -->
+        </div>
+    </div><!-- end col -->
+</div>
+
+<style>
+    .select2-container--default .select2-selection--multiple {
+        background-color: #b2a5a5;
+        border: 1px solid #aaa;
+        border-radius: 25px;
+        cursor: text;
+        padding: 4px;
+        border: 1px solid #f5f5f5 !important;
+    }
+</style>
+
+
+@section scripts
+{
+    <script>
+
+        $(document).ready(function () {
+
+            $.ajax({
+                url: "/DSendNotification/GetProviders",
+                type: "GET",
+                dataType: "json",
+
+                success: function (data) {
+
+                    var list = '';
+
+                    for (var i = 0; i < data.delegets.length; i++) {
+                        var option = '<option value="' +
+                            data.delegets[i].id +
+                            '">' +
+                            data.delegets[i].name +
+                            '</option>';
+                        list += option;
+                    };
+
+                    $('#multipleProviderSelect').append(list);
+                }
+            });
+
+            $.ajax({
+                url: "/DSendNotification/GetEmployees",
+                type: "GET",
+                dataType: "json",
+
+                success: function (data) {
+
+                    var list = '';
+
+                    for (var i = 0; i < data.users.length; i++) {
+                        var option = '<option value="' +
+                            data.users[i].id +
+                            '">' +
+                            data.users[i].name +
+                            '</option>';
+                        list += option;
+                    };
+
+                    $('#multipleEmployeeSelect').append(list);
+                }
+            });
+        });
+
+
+
+        var selectedProviders = [];
+        var selectedEmployees = [];
+
+        $('#multipleProviderSelect').change(function () {
+            allProviders = $("#multipleProviderSelect").val();
+
+            if (!$("#multipleProviderSelect").val()) {
+                $("#allProviders").attr("disabled", false);
+                allProviders = "";
+            }
+
+        });
+
+        $('#multipleEmployeeSelect').change(function () {
+            allEmployees = $("#multipleEmployeeSelect").val();
+
+            if (!$("#multipleEmployeeSelect").val()) {
+                $("#allEmployees").attr("disabled", false);
+                allEmployees = "";
+            }
+
+        });
+
+
+        var allProviders = [];
+        var allEmployees = [];
+
+        $("#allProviders").on("click", function () {
+            if ($(this).is(':checked')) {
+                $("#multipleProviderSelect > option").prop("selected", true);
+                $("#multipleProviderSelect").trigger("change");
+
+                $("#multipleProviderSelect > option:selected").each(function () {
+                    allProviders.push($(this).val());
+                });
+                $("#multipleProviderSelect").attr('disabled', true);
+
+            } else {
+                $("#multipleProviderSelect > option").prop("selected", false);
+                $("#multipleProviderSelect").trigger("change");
+
+                $("#multipleProviderSelect > option:selected").each(function () {
+                    allProviders.pop($(this).val());
+                });
+                $("#multipleProviderSelect").attr('disabled', false);
+            }
+
+        });
+
+        $("#allEmployees").on("click", function () {
+            if ($(this).is(':checked')) {
+                $("#multipleEmployeeSelect > option").prop("selected", true);
+                $("#multipleEmployeeSelect").trigger("change");
+
+                $("#multipleEmployeeSelect > option:selected").each(function () {
+                    allEmployees.push($(this).val());
+                });
+                $("#multipleEmployeeSelect").attr('disabled', true);
+
+            } else {
+                $("#multipleEmployeeSelect > option").prop("selected", false);
+                $("#multipleEmployeeSelect").trigger("change");
+
+                $("#multipleEmployeeSelect > option:selected").each(function () {
+                    allEmployees.pop($(this).val());
+                });
+                $("#multipleEmployeeSelect").attr('disabled', false);
+            }
+
+        });
+
+
+
+
+
+        function Send() {
+            debugger;
+            if ($("#notifyMessage").val() == "") {
+                toastr.warning('من فضلك ادخل النص');
+                $("#notifyMessage").focus();
+                return false;
+            }
+            if ((allProviders.length == 0 && allEmployees.length == 0)) {
+                toastr.warning('من فضلك ادخل حميع  بيانات الاشعار');
+                return false;
+            }
+
+
+
+
+
+            var providersData = [];
+            var employeesData = [];
+
+
+
+
+            $("#multipleProviderSelect > option:selected").each(function () {
+                providersData.push($(this).val());
+            });
+
+            $("#multipleEmployeeSelect > option:selected").each(function () {
+                employeesData.push($(this).val());
+            });
+
+            var textMessage = $("#notifyMessage").val();
+
+            Swal.fire({
+                position: 'success',
+                type: 'success',
+                title: 'تم الارسال بنجاح..',
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            $.ajax({
+                url: "/DSendNotification/Send",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    msg: textMessage,
+                    providers: providersData.join(','),
+                    employees: employeesData.join(',')
+                },
+                success: function (result) {
+                    $("#send").prop("disabled", true);
+
+                }
+            });
+
+            location.reload();
+
+            $.ajax({
+                url: "",
+                context: document.body,
+                success: function (s, x) {
+                    $(this).html(s);
+                }
+            });
+        }
+    </script>
+}
+

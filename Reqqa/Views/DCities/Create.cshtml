@@ -1,0 +1,57 @@
+﻿@model Salony.Models.ControllerDTO.CitiesDTO
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <div class="card-box" style="padding: 80px 20px 40px;">
+            <div class="row">
+
+                <h2 class="header-title m-t-0 m-b-30" style="text-align:center">اضافة مدينة جديد</h2>
+
+                <form enctype="multipart/form-data" asp-action="Create" asp-controller="DCities" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-horizontal">
+                        <hr />
+
+                        <div class="form-group">
+                            <label asp-for="nameAr" class="control-label col-md-2">اسم المدينة بالعربية </label>
+                            <div class="col-md-10">
+                                <input asp-for="nameAr" class="form-control" />
+                                <span asp-validation-for="nameAr" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="nameEn" class="control-label col-md-2">اسم المدينة بالانجليزية </label>
+                            <div class="col-md-10">
+                                <input asp-for="nameEn" class="form-control" />
+                                <span asp-validation-for="nameEn" class="text-danger"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="submit" value="اضافة" class="btn-new-style btn-rounded" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div>
+                                <a asp-action="Index" class="btn-black">العودة الى الرئيسية</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+

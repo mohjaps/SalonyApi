@@ -1,0 +1,337 @@
+﻿@model Salony.ViewModels.DashboardHomeViewModel
+@using Salony.ViewModels;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<!--
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+-->
+
+@if (User.IsInRole(Salony.Enums.AllEnums.Roles.SuperAdmin.ToString()))
+{
+
+
+<div class="boxs_home">
+
+        <div class="container">
+            <h2 style="text-align:center"> الصفحة الرئيسية</h2>
+            <div class="row">
+                @if (ViewBag.MyBranchId == 9)
+                {
+                    if (User.IsInRole(Salony.Enums.AllEnums.Roles.Admin.ToString()))
+                    {
+                        <div class="col-md-4 col-sm-6">
+                            <a asp-controller="DClients" asp-action="Index" class="the_box">
+                                <h3>العملاء</h3>
+                                <p>
+                                    @Model.clients
+                                </p>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <a asp-controller="DProviders" asp-action="Index" class="the_box">
+                                <h3>مقدمين الخدمة</h3>
+                                <p>
+                                    @Model.providers
+                                </p>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <a asp-controller="DCategories" asp-action="Index" class="the_box">
+                                <h3>الاقسام</h3>
+                                <p>
+                                    @Model.categories
+                                </p>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <a asp-controller="DCities" asp-action="Index" class="the_box">
+                                <h3>المدن</h3>
+                                <p>
+                                    @Model.cities
+                                </p>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <a asp-controller="DSliderhome" asp-action="Index" class="the_box">
+                                <h3>اعلانات الرئيسية</h3>
+                                <p>
+                                    @Model.homeSliders
+                                </p>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <a asp-controller="DSlidersalons" asp-action="Index" class="the_box">
+                                <h3>اعلانات الاقسام</h3>
+                                <p>
+                                    @Model.categoriesSliders
+                                </p>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <a asp-controller="DCopons" asp-action="Index" class="the_box">
+                                <h3>كوبونات الخصم</h3>
+                                <p>
+                                    @Model.copons
+                                </p>
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-4 col-sm-6">
+                            <a  href="#" class="the_box">
+                                <h3>العملاء</h3>
+                                <p>
+                                   
+                                </p>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <a  href="#" class="the_box">
+                                <h3>مقدمين الخدمة</h3>
+                                <p>
+                                   
+                                </p>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <a  href="#" class="the_box">
+                                <h3>الاقسام</h3>
+                                <p>
+                                  
+                                </p>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <a  href="#" class="the_box">
+                                <h3>المدن</h3>
+                                <p>
+                                  
+                                </p>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <a  href="#" class="the_box">
+                                <h3>اعلانات الرئيسية</h3>
+                                <p>
+                                    
+                                </p>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <a  href="#" class="the_box">
+                                <h3>اعلانات الاقسام</h3>
+                                <p>
+                                    
+                                </p>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <a  href="#" class="the_box">
+                                <h3>كوبونات الخصم</h3>
+                                <p>
+                                 
+                                </p>
+                            </a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-md-4 col-sm-6">
+                        <a asp-controller="DClients" asp-action="Index" class="the_box">
+                            <h3>العملاء</h3>
+                            <p>
+                                @Model.clients
+                            </p>
+                        </a>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <a asp-controller="DProviders" asp-action="Index" class="the_box">
+                            <h3>مقدمين الخدمة</h3>
+                            <p>
+                                @Model.providers
+                            </p>
+                        </a>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <a asp-controller="DCategories" asp-action="Index" class="the_box">
+                            <h3>الاقسام</h3>
+                            <p>
+                                @Model.categories
+                            </p>
+                        </a>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <a asp-controller="DCities" asp-action="Index" class="the_box">
+                            <h3>المدن</h3>
+                            <p>
+                                @Model.cities
+                            </p>
+                        </a>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <a asp-controller="DSliderhome" asp-action="Index" class="the_box">
+                            <h3>اعلانات الرئيسية</h3>
+                            <p>
+                                @Model.homeSliders
+                            </p>
+                        </a>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <a asp-controller="DSlidersalons" asp-action="Index" class="the_box">
+                            <h3>اعلانات الاقسام</h3>
+                            <p>
+                                @Model.categoriesSliders
+                            </p>
+                        </a>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <a asp-controller="DCopons" asp-action="Index" class="the_box">
+                            <h3>كوبونات الخصم</h3>
+                            <p>
+                                @Model.copons
+                            </p>
+                        </a>
+                    </div>
+                }
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+}
+
+@*@if (User.IsInRole(Salony.Enums.AllEnums.Roles.SuperAdmin.ToString()))
+{
+    <div class="col-sm-12">
+        <div class="card-box" style="border:none">
+            <h2 style="text-align:center"> الصفحة الرئيسية</h2>
+            <div class="row d-flex justify-content-center">
+
+                <div class="col-md-4">
+                    <h4> الدخول كفرع </h4>
+                    <select id="branchs" class="form-control">
+
+
+                        <option value="0">اختر الفرع</option>
+                        @foreach (var branch in ViewBag.Branchs as List<BranchHomeViewModel>)
+                        {
+                            if (ViewBag.MyBranchId == branch.id)
+                            {
+                                <option selected value="@branch.id">@branch.name</option>
+                            }
+                            else
+                            {
+                                <option value="@branch.id">@branch.name</option>
+                            }
+                        }
+                    </select>
+                    <input type="button" onclick="ChooseBranch()" class="btn-new-style" value="تاكيد" />
+
+                </div>
+
+
+                <div class="col-md-4">
+                    <a href="~/DBranches/Index" class="home-box">
+                        <h4> عدد الفروع </h4>
+                        <h5>
+                            @Model.branches
+                        </h5>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="~/DBranches/Index" class="home-box">
+                        <h4> رقم الفرع الحالى </h4>
+                        <h5>
+                            @((ViewBag.Branchs as List<BranchHomeViewModel>).Where(x=>x.id == ViewBag.MyBranchId).Select(x=>x.id).FirstOrDefault())
+                        </h5>
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+}*@
+
+
+
+@section scripts{
+    @*<script>
+        function ChooseBranch() {
+            var selectedBranch = $("#branchs").val();
+
+            //if (selectedBranch == 0) {
+            //    toastr.error("من فضلك اختر الفرع");
+            //}
+
+            $.post("/DBranches/ChangeBranch", { branch_id: selectedBranch }, function (data) {
+                if (data.key == 1) {
+                    toastr.success("تم اختيار الفرع بنجاح ..");
+
+                    window.location.reload();
+
+                } else {
+                    toastr.error(data.msg);
+                }
+            });
+
+        }
+    </script>*@
+
+    <script src="~/lib/aspnet-signalr/signalr.js"></script>
+
+    <script>
+
+        var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+        
+        function d1() {
+            connection.start().then(function () {
+                alert("d1");
+            });
+
+        }
+        function d2() {
+            connection.invoke("Connect", "dddddddd").then(function () {
+                alert("d2");
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+    </script>
+}
+
+
+

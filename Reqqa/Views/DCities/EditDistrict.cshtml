@@ -1,0 +1,56 @@
+﻿@model Salony.Models.ControllerDTO.DistrictsDTO
+@{
+    ViewData["Title"] = "EditDistrict";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <div class="card-box" style="padding: 80px 20px 40px;">
+            <div class="row">
+
+                <h2 class="header-title m-t-0 m-b-30" style="text-align:center">تعديل</h2>
+
+                <form enctype="multipart/form-data" asp-action="EditDistrict" asp-controller="DCities" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ID" />
+                    <input type="hidden" asp-for="isActive" />
+                    <input type="hidden" asp-for="FK_CityID" />
+                    <div class="form-horizontal">
+                        <hr />
+
+                        <div class="form-group">
+                            <label asp-for="nameAr" class="control-label col-md-2">اسم الحي عربى </label>
+                            <div class="col-md-10">
+                                <input asp-for="nameAr" class="form-control" />
+                                <span asp-validation-for="nameAr" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="nameEn" class="control-label col-md-2">اسم الحي انجليزى </label>
+                            <div class="col-md-10">
+                                <input asp-for="nameEn" class="form-control" />
+                                <span asp-validation-for="nameEn" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="حفظ" class="btn-new-style btn-rounded" />
+                        </div>
+                        <div>
+                            @*@Html.ActionLink("العودة الى الرئيسية", "Cities", new { id = ViewData["id"] }, new { @class = "btn-black" })*@
+
+                            <a asp-action="Districs" asp-route-id="@Model.FK_CityID" class="btn-black">العودة الى الرئيسية</a>
+                        </div>
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+

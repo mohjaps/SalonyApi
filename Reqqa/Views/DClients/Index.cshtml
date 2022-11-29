@@ -1,0 +1,451 @@
+﻿@model IEnumerable<Salony.Models.ControllerDTO.UserDBDTO>
+@using Salony.Enums;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h4 class="header-title m-t-0 m-b-30"></h4>
+            <div class="row">
+
+                <!-- -------------------------------------------------------------------------------------------------- -->
+                @*<p>
+                        @Html.ActionLink("اضافة إعلان جديد", "Create", "DSliderhome", null, new { @class = "btn btn-primary btn-rounded w-md waves-effect waves-light m-b-5" })
+                    </p>*@
+                <h2 style="text-align:center"> البيانات الأساسية</h2>
+
+                <table id="datatable-responsive1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <thead style="text-align:center">
+                        <tr>
+                            <th style="text-align:center">
+                                اسم المستخدم
+                            </th>
+                            @*<th style="text-align:center">
+                                    البريد الإلكترونى
+                                </th>*@
+                            <th style="text-align:center">
+                                رقم الجوال
+                            </th>
+                            <th style="text-align:center">
+                                كود التحقق
+                            </th>
+                            <th style="text-align:center">
+                                الصورة
+                            </th>
+                            <th style="text-align:center">
+                                تاريخ التسجيل
+                            </th>
+                            <th style="text-align:center">
+                                الحالة
+                            </th>
+                            <th style="text-align:center">
+                                تغير الحالة
+                            </th>
+                            <th>
+                                الطلبات
+                            </th>
+                            @if (ViewBag.branchId == 5)
+                            {
+                                <th style="text-align:center">
+                                    العربة
+                                </th>
+                                <th style="text-align:center">
+                                    تفاصيل العربة
+                                </th>
+                            }
+                            @*<th style="text-align:center">
+                                    محذوف
+                                </th>*@
+                            @*@if (ViewBag.branchId == 9 || ViewBag.branchId == 6)*@
+                            @if (ViewBag.branchId == (int)AllEnums.BranchName.Lady || ViewBag.branchId == (int)AllEnums.BranchName.Eleklil || ViewBag.branchId == (int)AllEnums.BranchName.ToGo)
+                            {
+                                <th>
+                                    المحفظة
+                                </th>
+                                <th>
+                                    اضاقة للمحفظة
+                                </th>
+                                <th>
+                                    خصم من المحفظة
+                                </th>
+                            }
+                            @if (ViewBag.branchId == 3 || ViewBag.branchId == 4 || ViewBag.branchId == 5 || ViewBag.branchId == 6 || ViewBag.branchId == 8 || ViewBag.branchId == 10)
+                            {
+                                <th>
+                                    حذف
+                                </th>
+                            }
+
+                            @if (ViewBag.branchId == (int)Salony.Enums.AllEnums.BranchName.ToGo)
+                            {
+                                <th>
+                                    كود الدعوة
+                                </th>
+                            }
+
+                        </tr>
+                    </thead>
+                    <tbody style="text-align:center">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.fullName
+                                </td>
+                                @*<td>
+                                        @item.Email
+                                    </td>*@
+                                <td>
+                                    @item.PhoneNumber
+                                </td>
+                                <td>
+                                    @item.code
+                                </td>
+                                <td>
+                                    <a data-fancybox="gallery-@item.id" href="@Salony.Helper.Helper.BaseUrlHoste@item.img">
+                                        <img src="@Salony.Helper.Helper.BaseUrlHoste@item.img" style="width:80px;height:80px">
+                                    </a>
+
+                                </td>
+                                <td>
+                                    @item.registerDate
+                                </td>
+                                <td>
+                                    @{
+                                        if (item.isActive == true)
+                                        {
+                                            <label id="@item.id" style="color:green;font-size: 17px;">مفعل</label>
+                                        }
+                                        else
+                                        {
+                                            <label id="@item.id" style="color:red;font-size: 17px;">غير مفعل</label>
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <input type="button" value="تغير الحالة" onclick="ChangeStatus('@item.id')" class="btn btn-purple btn-rounded" />
+                                </td>
+                                <td>
+                                    @Html.ActionLink("الطلبات", "Index", "DOrders", new { userId = item.id }, new { @class = "btn btn-info btn-rounded" })
+                                </td>
+                                @if (ViewBag.branchId == 5)
+                                {
+
+                                    <td>
+                                        @item.cartCount
+                                    </td>
+                                    <td>
+                                        <a target="_blank" href="@Url.Action("CartDetails", "DClients", new {id = item.id})" class="btn btn-purple btn-rounded">التفاصيل</a>
+                                    </td>
+                                }
+                                @*@if (ViewBag.branchId == 9 || ViewBag.branchId == 6)*@
+                                @if (ViewBag.branchId == (int)AllEnums.BranchName.Lady || ViewBag.branchId == (int)AllEnums.BranchName.Eleklil || ViewBag.branchId == (int)AllEnums.BranchName.ToGo)
+                                {
+                                    <td>
+                                        @item.userWallet
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger btn-rounded" onclick="IncreaseWallet('@item.id')"> اضافة</a>
+                                    </td>
+
+                                    <td>
+                                        <a class="btn btn-danger btn-rounded" onclick="DicreaseWallet('@item.id')"> خصم</a>
+                                    </td>
+                                }
+
+
+                                @if (ViewBag.branchId == 3 || ViewBag.branchId == 4 || ViewBag.branchId == 5 || ViewBag.branchId == 6 || ViewBag.branchId == 8 || ViewBag.branchId == 10)
+                                {
+                                    <td>
+                                        <a class="btn btn-danger btn-rounded" onclick="deleteUser('@item.id')">حذف</a>
+                                    </td>
+                                }
+
+                                @if (ViewBag.branchId == (int)Salony.Enums.AllEnums.BranchName.ToGo)
+                                {
+                                    <td>
+                                        @item.invitationCodeBallance
+                                    </td>
+                                }
+
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div><!-- end row -->
+        </div>
+
+    </div><!-- end col -->
+</div>
+
+
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            datatableFun("#datatable-responsive1", [0, 1, 2, 4]);
+        });
+
+        function datatableFun(selector, column) {
+            debugger;
+            $(`${selector}`).DataTable({
+                "language": {
+                    "sProcessing": "جارٍ التحميل...",
+                    "sLengthMenu": "أظهر _MENU_ مدخلات",
+                    "sZeroRecords": "لم يعثر على أية سجلات",
+                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+                    "sInfoPostFix": "",
+                    "sSearch": "ابحث:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "الأول",
+                        "sPrevious": "السابق",
+                        "sNext": "التالي",
+                        "sLast": "الأخير"
+                    }
+                }, "order": [],
+                "dom": 'Bflrtip',
+                //"buttons" : ['copy', 'csv', 'excel', 'print']
+
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        footer: true,
+                        exportOptions: {
+                            columns: column
+                        }
+                    },
+                    //{
+                    //    extend: 'print',
+                    //    footer: true,
+
+                    //    exportOptions: {
+                    //        columns: column
+                    //    }
+                    //},
+                    //{
+                    //    extend: 'csv',
+                    //    footer: true,
+                    //    exportOptions: {
+                    //        columns: column
+                    //    }
+                    //},
+                    //{
+                    //    extend: 'copy',
+                    //    footer: true,
+                    //    exportOptions: {
+                    //        columns: column
+                    //    }
+                    //}
+                ]
+
+
+            });
+        }
+
+
+
+        function ChangeStatus(id) {
+            $.post('/DClients/ChangeStatus', { id: id }, function (response) {
+                if (response == true) {
+                    $('#' + id).css('color', 'green');
+                    $('#' + id).html('مفعل');
+                } else if (response == false) {
+                    $('#' + id).css('color', 'red');
+                    $('#' + id).html('غير مفعل');
+                }
+            });
+        }
+
+        function deleteUser(id) {
+            //if (confirm('هل انت متاكد من حذف المستخدم ؟')) {
+            //    $.ajax({
+            //        url: "/DClients/deleteUser",
+            //        type: "POST",
+            //        dataType: "json",
+            //        data: {
+            //            id: id
+            //        },
+            //        success: function (result) {
+            //            if (result.key == 1) {
+            //                location.reload();
+            //            }
+            //        },
+            //        failure: function (info) {
+
+            //        }
+            //    });
+            //}
+
+
+
+
+            Swal.fire({
+                title: 'هل انت متاكد من حذف المستخدم ؟',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: 'اغلاق',
+                confirmButtonText: 'حذف',
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "/DClients/deleteUser",
+                        type: "POST",
+                        dataType: "json",
+                        data:
+                        {
+                            id: id
+                        },
+                        success: function (result) {
+                            if (result.key == 1) {
+                                Swal.fire({
+                                    position: 'success',
+                                    type: 'success',
+                                    title: 'تم الحذف بنجاح..',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                            location.reload();
+                        },
+                        failure: function (info) {
+
+                        }
+                    });
+                }
+            });
+        }
+
+
+        function IncreaseWallet(id) {
+            Swal.fire({
+                title: 'اضافة مبلغ للمحفظة ؟',
+                type: 'warning',
+                showCancelButton: true,
+                html:
+                    `<div>` +
+                    //<div class="form-group">
+                    //    <label style="text-align: start; display: flex; align-items: center; gap: 5px; font-size: 16px;"><input type="checkbox" checked/> <span>خصم من المحفظه</span></label>
+                    //</div>`+
+                    //   <div class="form-group">
+                    //      <input id="swal-input2" class="swal2-input"/>
+                    //   </div>
+                    `</div>`,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                input: 'number',
+                cancelButtonText: 'اغلاق',
+                confirmButtonText: 'تأكيد',
+
+            }).then((result) => {
+                if (result.value) {
+                    //alert("Result: " + result.value);
+                    $.ajax({
+                        url: "/DClients/IncreaseWallet",
+                        type: "POST",
+                        dataType: "json",
+                        data:
+                        {
+                            id: id,
+                            price: result.value
+                        },
+                        success: function (result) {
+                            if (result.key == 1) {
+                                Swal.fire({
+                                    position: 'success',
+                                    type: 'success',
+                                    title: 'تم الاضافة  بنجاح..',
+                                    showConfirmButton: false,
+                                    timer: 5000
+                                });
+                                window.location.reload();
+
+                            }
+                        },
+                        failure: function (info) {
+
+                        }
+                    });
+
+                }
+
+            });
+
+        }
+
+        function DicreaseWallet(id) {
+            Swal.fire({
+                title: 'خصم مبلغ من المحفظة ؟',
+                type: 'warning',
+                showCancelButton: true,
+                html:
+                    `<div>` +
+                    //<div class="form-group">
+                    //    <label style="text-align: start; display: flex; align-items: center; gap: 5px; font-size: 16px;"><input type="checkbox" checked/> <span>خصم من المحفظه</span></label>
+                    //</div>`+
+                    //   <div class="form-group">
+                    //      <input id="swal-input2" class="swal2-input"/>
+                    //   </div>
+                    `</div>`,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                input: 'number',
+                cancelButtonText: 'اغلاق',
+                confirmButtonText: 'تأكيد',
+
+            }).then((result) => {
+                if (result.value) {
+                    //alert("Result: " + result.value);
+                    $.ajax({
+                        url: "/DClients/DicreaseWallet",
+                        type: "POST",
+                        dataType: "json",
+                        data:
+                        {
+                            id: id,
+                            price: result.value
+                        },
+                        success: function (result) {
+                            if (result.key == 1) {
+                                Swal.fire({
+                                    position: 'success',
+                                    type: 'success',
+                                    title: 'تم الخصم  بنجاح..',
+                                    showConfirmButton: false,
+                                    timer: 5000
+                                });
+                                window.location.reload();
+
+                            }
+                            else {
+                                Swal.fire({
+                                    position: 'warning',
+                                    type: 'warning',
+                                    title: 'عفوا لايمكن خصم هذا المبلغ من المحفظة..',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        },
+                        failure: function (info) {
+
+                        }
+                    });
+
+                }
+            });
+
+        }
+
+    </script>
+
+}

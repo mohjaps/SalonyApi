@@ -1,0 +1,111 @@
+﻿.Pounds_body {
+    padding: 20px
+}
+
+    .Pounds_body h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .Pounds_body select {
+        border: none;
+        background: none;
+        outline: none;
+        border: 1px solid #EEE;
+        margin-bottom: 30px;
+        width: 200px;
+        border-radius: 5px;
+        padding: 5px;
+    }
+
+.the-add-Pounds {
+    display: flex;
+    align-items: center;
+}
+
+    .the-add-Pounds h5 {
+        margin-left: 20px;
+    }
+
+    .the-add-Pounds > span, .table-Pounds div > span {
+        padding: 5px 10px;
+        background-color: dodgerblue;
+        border-radius: 5px;
+        margin: 2px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+.table-Pounds .the-text-input {
+    display: block;
+    width: 100%;
+    background: none;
+    outline: none;
+    border: none;
+    border: 1px solid #EEE;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #FFF;
+}
+
+.table-Pounds {
+    width: 100%;
+    margin: 20px 0;
+    text-align: center;
+}
+
+
+
+
+.the-all-title > div {
+    text-align: center;
+    padding: 5px;
+    background-color: dodgerblue;
+    color: #FFF;
+}
+
+
+.the-all-title-2 > div {
+    text-align: right;
+    padding: 5px;
+    padding-right: 20px;
+    font-weight: bold;
+    color: dimgrey
+}
+
+
+.table-Pounds .add-tr > div {
+    padding: 5px
+}
+
+.table-Pounds .add-tr:nth-child(odd) {
+    background-color: #EEE;
+}
+
+.outer-button {
+    text-align: right
+}
+
+    .outer-button .the-btn {
+        margin: 0px 10px;
+        padding: 5px 10px;
+        font-weight: bold;
+        color: #FFF;
+        border-radius: 5px;
+        outline: none;
+        background: none;
+        border: none;
+        margin: 2px
+    }
+
+        .outer-button .the-btn:first-child {
+            background-color: #44ab44
+        }
+
+        .outer-button .the-btn:nth-child(2) {
+            background-color: dodgerblue
+        }
+
+        .outer-button .the-btn:last-of-type {
+            background-color: crimson
+        }

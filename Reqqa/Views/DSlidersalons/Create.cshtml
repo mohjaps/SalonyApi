@@ -1,0 +1,61 @@
+﻿@model Salony.Models.ControllerDTO.SlidersDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="col-sm-12">
+
+    <div class="card-box" style="padding: 80px 20px 40px;">
+        <div class="row">
+
+            <h2 class="header-title m-t-0 m-b-30" style="text-align:center">اضافة إعلان جديد </h2>
+            <form enctype="multipart/form-data" asp-action="Create" method="post">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="img" class="control-label">صورة الاعلان</label>
+                        <input type="file" asp-for="img" class="form-control" />
+                        <span asp-validation-for="img" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <img id="output" src="#" alt="your image" style="width:100px;height:100px;" />
+                    </div>
+                </div>
+
+
+                <div class="col-md-12">
+                    <div class="form-group">
+
+                        <input type="submit" value="اضافة" onclick="Validtion()" class="btn-new-style" />
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+<script>
+    document.getElementById('img').onchange = function (event) {
+        var image = document.getElementById('output');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>
+}
+

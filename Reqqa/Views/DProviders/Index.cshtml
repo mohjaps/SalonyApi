@@ -1,0 +1,802 @@
+﻿@model IEnumerable<Salony.Models.ControllerDTO.ProviderAditionalDataDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h4 class="header-title m-t-0 m-b-30"></h4>
+            <div class="row">
+
+                <!-- -------------------------------------------------------------------------------------------------- -->
+                @*<p>
+                    @Html.ActionLink("اضافة إعلان جديد", "Create", "DSliderhome", null, new { @class = "btn btn-primary btn-rounded w-md waves-effect waves-light m-b-5" })
+                    </p>*@
+                <h2 style="text-align:center"> المشاغل </h2>
+
+                <table id="datatable-responsive1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <thead style="text-align:center">
+                        <tr>
+                            <th style="text-align:center">
+                                اسم المستخدم
+                            </th>
+                            <th style="text-align:center">
+                                البريد الإلكترونى
+                            </th>
+                            <th style="text-align:center">
+                                رقم الجوال
+                            </th>
+                            <th style="text-align:center">
+                                كود التحقق
+                            </th>
+                            @if (ViewBag.branchId == 3)
+                            {
+                                <th>
+                                    كلمة المرور
+                                </th>
+                            }
+                            <th style="text-align:center">
+                                الصورة
+                            </th>
+                            @if (ViewBag.branchId == 0)
+                            {
+                                <th>
+                                    العمولة المستحقة
+                                </th>
+                                <th>
+                                    دفع العمولة
+                                </th>
+                            }
+                            @if (ViewBag.branchId == 5)
+                            {
+                                <th>
+                                    المبلغ المدفوع من قبل العميل
+                                </th>
+                                <th>
+                                    العمولة المستحقة
+                                </th>
+                                <th>
+                                    اضافة لمحفظة العميل
+                                </th>
+                                <th>
+                                    المحفظة
+                                </th>
+                                <th>
+                                    تصفير المحفظة
+                                </th>
+                            }
+                            @if (false)
+                            {
+                                <th>
+                                    المحفظة
+                                </th>
+                                <th>
+                                    اضاقة للمحفظة
+                                </th>
+                                <th>
+                                    خصم من المحفظة
+                                </th>
+                            }
+                            <th style="text-align:center">
+                                الحالة
+                            </th>
+                            <th style="text-align:center">
+                                تغير الحالة
+                            </th>
+                            @*<th style="text-align:center">
+                                محذوف
+                                </th>*@
+
+                            <th style="text-align:center">
+                                اسم البوتيك بالعربى
+                            </th>
+                            <th style="text-align:center">
+                                اسم البوتيك بالإنجليزى
+                            </th>
+                            <th>
+                                الطلبات
+                            </th>
+                            @*<th style="text-align:center">
+                                السجل التجارى
+                                </th>*@
+                            @if (ViewBag.branchId == 10)
+                            {
+                                <th style="text-align:center">
+                                    صورة الهوية
+                                </th>
+                                <th style="text-align:center">
+                                    رقم السجل التجارى
+                                </th>
+                                <th style="text-align:center">
+                                    صورة السجل التجارى
+                                </th>
+                                <th style="text-align:center">
+                                    الشهادة الصحية
+                                </th>
+                                <th style="text-align:center">
+                                    رقم الايبان
+                                </th>
+                                <th style="text-align:center">
+                                    صورة الايبان
+                                </th>
+                            }
+                            <th style="text-align:center">
+                                الوصف
+                            </th>
+                            @if (ViewBag.branchId == 1)
+                            {
+                                <th>
+                                    رقم الحساب البنكى
+                                </th>
+                                <th>
+                                    صورة الشهادة
+                                </th>
+                            }
+                            @if (ViewBag.branchId == 6)
+                            {
+                                <th>
+                                    رقم الايبان
+                                </th>
+
+                            }
+
+                            <th style="text-align:center">
+                                التقييم
+                            </th>
+                            <th style="text-align:center">
+                                وقت البداية
+                            </th>
+                            <th style="text-align:center">
+                                وقت الإنتهاء
+                            </th>
+                            <th style="text-align:center">
+                                الحى
+                            </th>
+                            <th style="text-align:center">
+                                المدينة
+                            </th>
+                            <th style="text-align:center">
+                                تاريخ التسجيل
+                            </th>
+                            @if (ViewBag.branchId == 6)
+                            {
+                                <th>
+                                    تفاصيل الخدمات
+                                </th>
+                            }
+                            @if (ViewBag.branchId == 3 || ViewBag.branchId == 4 || ViewBag.branchId == 5 || ViewBag.branchId == 6 || ViewBag.branchId == 8 || ViewBag.branchId == 10)
+                            {
+                                <th>
+                                    حذف
+                                </th>
+                            }
+
+                        </tr>
+                    </thead>
+                    <tbody style="text-align:center">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.fullName
+                                </td>
+                                <td>
+                                    @item.Email
+                                </td>
+                                <td>
+                                    @item.PhoneNumber
+                                </td>
+                                <td>
+                                    @item.code
+                                </td>
+                                @if (ViewBag.branchId == 3)
+                                {
+                                    <th>
+                                        @item.password
+                                    </th>
+                                }
+                                <td>
+                                    <a data-fancybox="gallery-@item.id" href="@Salony.Helper.Helper.BaseUrlHoste@item.img">
+                                        <img src="@Salony.Helper.Helper.BaseUrlHoste@item.img" style="width:80px;height:80px">
+                                    </a>
+
+                                </td>
+                                @if (ViewBag.branchId == 0)
+                                {
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.neededCommission)
+                                    </td>
+                                    <td>
+                                        @if (item.neededCommission > 0)
+                                        {
+                                            <input type="button" value="دفع العمولة" onclick="payCommission('@item.id')" class="btn btn-danger btn-rounded" />
+                                        }
+                                        else
+                                        {
+                                            <input type="button" value="دفع العمولة" class="btn btn-purple btn-rounded" disabled />
+                                        }
+                                    </td>
+                                }
+                                @if (ViewBag.branchId == 5)
+                                {
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.allDdeposit)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.allCommission)
+                                    </td>
+
+                                    @*<td>
+                                        @Html.DisplayFor(modelItem => item.neededWalletCommission)
+                                        </td>*@
+                                    <td>
+                                        @*@if (item.allCommission > 0)
+                                            {
+                                            <input type="button" value="اضافة للمحفظة" onclick="payWalletCommission('@item.id')" class="btn btn-danger btn-rounded" />
+                                            }
+                                            else
+                                            {
+                                            <input type="button" value="اضافة للمحفظة" class="btn btn-purple btn-rounded" disabled />
+                                            }*@
+                                        <input type="button" value="اضافة للمحفظة" onclick="payWalletCommission('@item.id')" class="btn btn-danger btn-rounded" />
+                                    </td>
+                                    @*<td>
+                                        @if (item.neededWalletCommission > 0)
+                                        {
+                                        <input type="button" value="اضافة للمحفظة" onclick="payWalletCommission('@item.id')" class="btn btn-danger btn-rounded" />
+                                        }
+                                        else
+                                        {
+                                        <input type="button" value="اضافة للمحفظة" class="btn btn-purple btn-rounded" disabled />
+                                        }
+                                        </td>*@
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.wallet)
+                                    </td>
+                                    <td>
+                                        @if (item.wallet > 0)
+                                        {
+                                            <input type="button" value="تصفير المحفظة" onclick="emptyWallet('@item.id')" class="btn btn-danger btn-rounded" />
+                                        }
+                                        else
+                                        {
+                                            <input type="button" value="تصفير المحفظة" class="btn btn-purple btn-rounded" disabled />
+                                        }
+                                    </td>
+                                }
+
+                                @if (false)
+                                {
+                                    <td>
+                                        @item.userWallet
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger btn-rounded" onclick="IncreaseWallet('@item.id')"> اضافة</a>
+                                    </td>
+
+                                    <td>
+                                        <a class="btn btn-danger btn-rounded" onclick="DicreaseWallet('@item.id')"> خصم</a>
+                                    </td>
+                                }
+                                <td>
+                                    @{
+                                        if (item.isActive == true)
+                                        {
+                                            <label id="@item.id" style="color:green;font-size: 17px;">مفعل</label>
+                                        }
+                                        else
+                                        {
+                                            <label id="@item.id" style="color:red;font-size: 17px;">غير مفعل</label>
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <input type="button" value="تغير الحالة" onclick="ChangeStatus('@item.id')" class="btn btn-purple btn-rounded" />
+                                </td>
+                                @*<td>
+                                    @{
+                                    if (item.isDeleted == true)
+                                    {
+                                    <label id="@item.id" style="color:green;font-size: 17px;">محذوف</label>
+                                    }
+                                    else
+                                    {
+                                    <label id="@item.id" style="color:red;font-size: 17px;">غير محذوف</label>
+                                    }
+                                    }
+                                    </td>*@
+                                <!--------------------->
+                            <td>
+                                    @item.nameAr
+                                </td>
+                                <td>
+                                    @item.nameEn
+                                </td>
+                                <td>
+                                    @Html.ActionLink("الطلبات", "Index", "DOrders", new { id = item.ProviderID }, new { @class = "btn btn-info btn-rounded" })
+                                </td>
+                                @*<td>
+                                    @item.commercialRegister
+                                    </td>*@
+                                @if (ViewBag.branchId == 10)
+                                {
+                                    <td>
+                                        <a data-fancybox="gallery1-@item.id" href="@item.IdentityImage">
+                                            <img src="@item.IdentityImage" style="width:80px;height:80px">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @item.commercialRegister
+                                    </td>
+                                    <td>
+                                        <a data-fancybox="gallery2-@item.id" href="@item.CommercialRegisterImage">
+                                            <img src="@item.CommercialRegisterImage" style="width:80px;height:80px">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a data-fancybox="gallery3-@item.id" href="@item.HealthCardImage">
+                                            <img src="@item.HealthCardImage" style="width:80px;height:80px">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @item.IbanNumber
+                                    </td>
+                                    <td>
+                                        <a data-fancybox="gallery4-@item.id" href="@item.IbanImage">
+                                            <img src="@item.IbanImage" style="width:80px;height:80px">
+                                        </a>
+                                    </td>
+                                }
+                                <td>
+                                    @item.descriptionAr
+                                </td>
+
+                                @if (ViewBag.branchId == 1)
+                                {
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.bankAccount)
+                                    </th>
+                                    <th>
+                                        <img src="/@item.certificatePhoto" height="80" width="80px" />
+                                    </th>
+                                }
+                                @if (ViewBag.branchId == 6)
+                                {
+                                    if (item.UserIbanNumber.Trim() == "")
+                                    {
+                                        <th>
+
+                                            <label>لايوجد رقم ايبان</label>
+
+                                        </th>
+                                    }
+                                    else
+                                    {
+                                        <th>
+
+                                            @Html.DisplayFor(modelItem => item.UserIbanNumber)
+
+                                        </th>
+                                    }
+
+
+                                }
+                                <td>
+                                    @item.rate
+                                </td>
+                                <td>
+                                    @item.timeForm.ToString("h:mm tt")
+                                </td>
+                                <td>
+                                    @item.timeTo.ToString("h:mm tt")
+                                </td>
+                                <td>
+                                    @item.destrict
+                                </td>
+                                <td>
+                                    @item.city
+                                </td>
+                                <td>
+                                    @item.registerDate
+                                </td>
+                                @if (ViewBag.branchId == 6)
+                                {
+                                    <td>
+                                        <input type="button" value="الخدمات" onclick="getDetails('@item.id')" class="btn btn-purple btn-rounded" data-toggle="modal" data-target=".bd-rate-modal-lg" />
+                                    </td>
+                                }
+
+                                @if (ViewBag.branchId == 3 || ViewBag.branchId == 4 || ViewBag.branchId == 5 || ViewBag.branchId == 6 || ViewBag.branchId == 8 || ViewBag.branchId == 10)
+                                {
+                                    <td>
+                                        <a class="btn btn-danger btn-rounded" onclick="deleteUser('@item.id')">حذف</a>
+                                    </td>
+                                }
+
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+                <!--Wallet Modal -->
+                <div class="modal fade bd-rate-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg ">
+
+                        <div class="modal-content " style="width:50vw ">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title">تفاصيل الخدمات</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <table id="rate" style="width:100%; height:100%;" class="table table-bordered">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- end row -->
+        </div>
+    </div><!-- end col -->
+</div>
+
+
+
+@section scripts{
+
+<script>
+    $(document).ready(function () {
+        datatableFun("#datatable-responsive1", [0, 1, 2, 3, 7, 8, 11, 12, 13, 14, 15, 16, 17]);
+    });
+
+    function datatableFun(selector, column) {
+        debugger;
+        $(`${selector}`).DataTable({
+            "language": {
+                "sProcessing": "جارٍ التحميل...",
+                "sLengthMenu": "أظهر _MENU_ مدخلات",
+                "sZeroRecords": "لم يعثر على أية سجلات",
+                "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+                "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+                "sInfoPostFix": "",
+                "sSearch": "ابحث:",
+                "sUrl": "",
+                "oPaginate": {
+                    "sFirst": "الأول",
+                    "sPrevious": "السابق",
+                    "sNext": "التالي",
+                    "sLast": "الأخير"
+                }
+            }, "order": [],
+            "dom": 'Bflrtip',
+            //"buttons" : ['copy', 'csv', 'excel', 'print']
+
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    footer: true,
+                    exportOptions: {
+                        columns: column
+                    }
+                },
+                //{
+                //    extend: 'print',
+                //    footer: true,
+
+                //    exportOptions: {
+                //        columns: column
+                //    }
+                //},
+                //{
+                //    extend: 'csv',
+                //    footer: true,
+                //    exportOptions: {
+                //        columns: column
+                //    }
+                //},
+                //{
+                //    extend: 'copy',
+                //    footer: true,
+                //    exportOptions: {
+                //        columns: column
+                //    }
+                //}
+            ]
+
+
+        });
+    }
+
+
+    function ChangeStatus(id) {
+        $.post('/DProviders/ChangeStatus', { id: id }, function (response) {
+            if (response == true) {
+                $('#' + id).css('color', 'green');
+                $('#' + id).html('مفعل');
+            } else if (response == false) {
+                $('#' + id).css('color', 'red');
+                $('#' + id).html('غير مفعل');
+            }
+        });
+    }
+
+
+    function payCommission(id) {
+        $.ajax({
+            url: "/DProviders/payCommission",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: id
+            },
+            success: function (result) {
+
+                if (result.key == 1) {
+                    location.reload();
+
+                } else if (result.data == false) {
+                    toastr.error("حدث خطأ")
+                }
+            },
+            failure: function (info) {
+
+            }
+        });
+
+    }
+
+
+    function payWalletCommission(id) {
+
+        var a = prompt("ادخل قيمة المحفظة", "0");
+        if (a != null) {
+            let price = a;
+
+            $.ajax({
+                url: "/DProviders/payWalletCommission",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id,
+                    price: price
+                },
+                success: function (result) {
+
+                    if (result.key == 1) {
+                        location.reload();
+
+                    } else if (result.data == false) {
+                        toastr.error("حدث خطأ")
+                    }
+                },
+                failure: function (info) {
+
+                }
+            });
+        }
+
+
+
+    }
+
+    function emptyWallet(id) {
+        if (confirm('هل انت متاكد من تصفير محفظة العميل')) {
+
+            $.ajax({
+                url: "/DProviders/emptyWallet",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function (result) {
+
+                    if (result.key == 1) {
+                        location.reload();
+
+                    } else if (result.data == false) {
+                        toastr.error("حدث خطأ")
+                    }
+                },
+                failure: function (info) {
+
+                }
+            });
+        }
+    }
+
+    function deleteUser(id) {
+        if (confirm('هل انت متاكد من حذف المستخدم ؟')) {
+            $.ajax({
+                url: "/DProviders/deleteUser",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function (result) {
+                    if (result.key == 1) {
+                        location.reload();
+                    }
+                },
+                failure: function (info) {
+
+                }
+            });
+        }
+    }
+
+    function IncreaseWallet(id) {
+        Swal.fire({
+            title: 'اضافة مبلغ للمحفظة ؟',
+            type: 'warning',
+            showCancelButton: true,
+            html:
+                `<div>` +
+                //<div class="form-group">
+                //    <label style="text-align: start; display: flex; align-items: center; gap: 5px; font-size: 16px;"><input type="checkbox" checked/> <span>خصم من المحفظه</span></label>
+                //</div>`+
+                //   <div class="form-group">
+                //      <input id="swal-input2" class="swal2-input"/>
+                //   </div>
+                `</div>`,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            input: 'number',
+            cancelButtonText: 'اغلاق',
+            confirmButtonText: 'تأكيد',
+
+        }).then((result) => {
+            if (result.value) {
+                //alert("Result: " + result.value);
+                $.ajax({
+                    url: "/DClients/IncreaseWallet",
+                    type: "POST",
+                    dataType: "json",
+                    data:
+                    {
+                        id: id,
+                        price: result.value
+                    },
+                    success: function (result) {
+                        if (result.key == 1) {
+                            Swal.fire({
+                                position: 'success',
+                                type: 'success',
+                                title: 'تم الاضافة  بنجاح..',
+                                showConfirmButton: false,
+                                timer: 5000
+                            });
+                            window.location.reload();
+
+                        }
+                    },
+                    failure: function (info) {
+
+                    }
+                });
+
+            }
+
+        });
+
+    }
+
+    function DicreaseWallet(id) {
+        Swal.fire({
+            title: 'خصم مبلغ من المحفظة ؟',
+            type: 'warning',
+            showCancelButton: true,
+            html:
+                `<div>` +
+                //<div class="form-group">
+                //    <label style="text-align: start; display: flex; align-items: center; gap: 5px; font-size: 16px;"><input type="checkbox" checked/> <span>خصم من المحفظه</span></label>
+                //</div>`+
+                //   <div class="form-group">
+                //      <input id="swal-input2" class="swal2-input"/>
+                //   </div>
+                `</div>`,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            input: 'number',
+            cancelButtonText: 'اغلاق',
+            confirmButtonText: 'تأكيد',
+
+        }).then((result) => {
+            if (result.value) {
+                //alert("Result: " + result.value);
+                $.ajax({
+                    url: "/DClients/DicreaseWallet",
+                    type: "POST",
+                    dataType: "json",
+                    data:
+                    {
+                        id: id,
+                        price: result.value
+                    },
+                    success: function (result) {
+                        if (result.key == 1) {
+                            Swal.fire({
+                                position: 'success',
+                                type: 'success',
+                                title: 'تم الخصم  بنجاح..',
+                                showConfirmButton: false,
+                                timer: 5000
+                            });
+                            window.location.reload();
+
+                        }
+                        else {
+                            Swal.fire({
+                                position: 'warning',
+                                type: 'warning',
+                                title: 'عفوا لايمكن خصم هذا المبلغ من المحفظة..',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    },
+                    failure: function (info) {
+
+                    }
+                });
+
+            }
+        });
+
+    }
+
+    function getDetails(id) {
+        $.ajax({
+        url: "/DProviders/getDetails",
+        type: "POST",
+        dataType: "json",
+        data: {
+            id: id
+        },
+        success: function (result) {
+            if (result.key==0 || result.data.length ==0)
+            {
+                $("#rate").empty();
+                $("#rate").append('<tr> <th>لا يوجد خدمات حاليا </th>  </tr>');
+
+            }else {
+
+                $("#rate").empty();
+
+                var hh = '<tr> <th>الخدمه الرئيسية  </th> <th> الخدمه الفرعيه </th> <th> تكلفة الخدمه </th>  </tr>';
+                $("#rate").append(hh);
+                result.data.forEach((item, index) => {
+                    var row = `<tr>
+                                <td>
+                                ${item.name}
+                                </td>
+
+                                <td>
+                                ${item.sub_services[0].name_ar}
+                                </td>
+                                <td>
+                                ${item.sub_services[0].price}
+                                </td>
+
+                                </tr>`;
+                    $("#rate").append(row);
+                })
+            }
+        },
+        failure: function (info) {
+            console.log(info);
+        }
+    });
+
+
+        }
+
+</script>
+
+}

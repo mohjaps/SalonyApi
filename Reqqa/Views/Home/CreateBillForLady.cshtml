@@ -1,0 +1,209 @@
+﻿@model Salony.ViewModels.CreateBillViewModel
+@using Salony.Enums;
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="ar">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title></title>
+    <!-- title logo -->
+    <link rel="icon" href="~/Invoice/imgs/icon.png" type="image/x-icon" />
+
+    <style>
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none
+        }
+
+        @@font-face {
+            font-family: "myFont";
+            src: url('/Invoice/fonts/JF-Flat-regular.ttf') format('truetype');
+        }
+
+        body {
+            direction: rtl;
+            text-align: right;
+            font-family: "myFont";
+            word-spacing: 1px;
+            background: #FFFFFF;
+            color: #7b7b7b;
+            font-size: 17px;
+            text-shadow: 0 0;
+            margin: 0;
+            padding: 0
+        }
+
+        .body-content {
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .the_Bill {
+            border: 1px solid #EEE;
+            border-radius: 10px;
+            width: 500px;
+            max-width: 100%;
+            padding: 30px 15px;
+            background: #FFFFFF;
+            box-shadow: 0 0 5px 0 rgb(0 0 0 / 10%);
+            margin: auto;
+        }
+
+            .the_Bill .logo {
+                width: 125px;
+                height: 162px;
+                display: block;
+                margin: auto;
+                margin-bottom: 20px;
+                object-fit: cover;
+            }
+
+        .hr {
+            display: block;
+            width: 100%;
+            height: 1px;
+            background: #EEE;
+            margin: 15px 0;
+            box-shadow: 0 0 3px 0 rgb(0 0 0 / 5%);
+        }
+
+        .float_R {
+            float: right
+        }
+
+        .float_L {
+            float: left
+        }
+
+        .info_bill ul {
+            overflow: hidden;
+            margin: 4px 0
+        }
+
+
+
+        .title {
+            color: #3d7c74;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .info_order li {
+            margin: 5px 0;
+            overflow: hidden
+        }
+
+        .par_code h4 {
+            margin: 0;
+            margin-bottom: 13px;
+            text-align: center;
+            color: #3d7c74;
+        }
+
+        .par_code img {
+            width: 116px;
+            height: 116px;
+            display: block;
+            margin: auto;
+            border: 1px solid #3d7c74;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #CCC;
+            border-radius: 20px;
+            cursor: pointer
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #484747
+            }
+    </style>
+
+
+</head>
+
+<body>
+    <header></header>
+    <!-- Start body-content -->
+    <div class="body-content">
+        <div class="the_Bill">
+            <img src="~/Invoice/imgs/ladiesNewLogo.png" class="logo">
+            <span class="hr"></span>
+            <div class="info_bill">
+                <ul>
+                    <li class="float_R">رقم الفاتورة : <span>@Model.id</span></li>
+                    <li class="float_L">التاريخ : <span>@Model.date</span></li>
+                </ul>
+                <ul>
+                    <li class="float_R">وقت الطلب : <span>@Model.time</span></li>
+                </ul>
+            </div>
+            <span class="hr"></span>
+            <div>
+                <div class="title">
+                    <div class="float_R">تفاصيل الطلب</div>
+                </div>
+                <ul class="info_order">
+                    @foreach (var item in Model.services)
+                    {
+                        <li>
+                            <div class="float_R">نوع الخدمة :@item.name  </div>
+                            <div class="float_L">@item.price ريال</div>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+            <span class="hr"></span>
+            <div>
+                <div class="title">
+                    <div class="float_R">عدد الخدمات(@Model.services.Count())</div>
+                    <div class="float_L">طريقة الدفع: @(Model.typePay == (int)AllEnums.TypePay.cash ? "دفع الكترونى" : Model.typePay == (int)AllEnums.TypePay.online ? "دفع الكترونى": Model.typePay == (int)AllEnums.TypePay.wallet?"محفظة":"" )</div>
+                </div>
+                <ul class="info_order">
+                    <li>
+                        <div class="float_R"> المبلغ الاجمالى للخدمات</div>
+                        <div class="float_L">@Model.price ريال</div>
+                    </li>
+
+                    <li>
+                        <div class="float_R">إجمالى القيمة المضافة(@Math.Round((Model.tax*100))%) و تقديم الخدمة(@Math.Round((Model.appPercent * 100))%) </div>
+                        <div class="float_L">@Model.totalCut ريال</div>
+                    </li>
+                    <li>
+                        <div class="float_R">المبلغ الاجمالي يتضمن الضريبة</div>
+                        <div class="float_L">@Model.totalPrice ريال</div>
+                    </li>
+                </ul>
+            </div>
+            <span class="hr"></span>
+            <div class="par_code">
+                <h4>الرقم الضريبي : @Model.commercialRegister</h4>
+                <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ViewBag.ReturnQrImg))" style=" height:150px; width:150px" />
+            </div>
+        </div>
+    </div>
+    <footer></footer>
+</body>
+
+</html>

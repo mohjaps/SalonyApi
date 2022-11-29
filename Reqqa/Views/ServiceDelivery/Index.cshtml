@@ -1,0 +1,103 @@
+﻿@model IEnumerable<Core.TableDb.ServiceDelivery>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@*
+    لو المسافة بين المستخدم و المشغل اكبر من اخر قيمة بخليه ياخد اكبر قيمة فى جدول الاسعار
+
+*@
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h4 class="header-title m-t-0 m-b-30"></h4>
+            <div class="row">
+
+                <!-- -------------------------------------------------------------------------------------------------- -->
+
+                <p>
+                    @Html.ActionLink("اضافة سعر جديد", "CreateDeliveryService", "ServiceDelivery", null, new { @class = "btn btn-primary btn-rounded w-md waves-effect waves-light m-b-5" })
+                </p>
+                <h2 style="text-align:center">الاسعار المضافة على الخدمات</h2>
+
+                <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <thead style="text-align:center">
+                        <tr>
+                            <th style="text-align:center">
+                                #
+                            </th>
+                            <th style="text-align:center">
+                                من(بالكيلومتر)
+                            </th>
+                            <th style="text-align:center">
+                                الى(بالكيلومتر)
+                            </th>
+                            <th style="text-align:center">
+                                السعر
+                            </th>
+                            <th style="text-align:center">
+                                تعديل
+                            </th>
+                            <th style="text-align:center">
+                                حذف
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align:center">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Id
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FromInKM)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ToInKM)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DeliveryPrice)
+                                </td>
+                                <td>
+                                    <a class="icon-font btn" asp-action="Edit" asp-route-id="@item.Id">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+
+                                    </a>
+                                </td>
+                                <td>
+                                    <input type="button" value="حذف" onclick="remove('@item.Id')" class="btn btn-purple btn-rounded" />
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div><!-- end row -->
+        </div>
+    </div><!-- end col -->
+</div>
+
+
+
+@section scripts{
+
+    <script>
+
+        function remove(id) {
+            $.post('/ServiceDelivery/remove', { id: id }, function (response) {
+                if (response.data == true) {
+                    toastr.success('تم الحذف بنجاح');
+                    location.reload();
+                } else if (response.data == false) {
+                    toastr.warning('حدث خطأ ما');
+                }
+            });
+        }
+
+
+    </script>
+
+}

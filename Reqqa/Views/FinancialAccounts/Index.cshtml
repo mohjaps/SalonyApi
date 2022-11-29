@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Core.TableDb.FinancialAccount>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    th, td {
+        text-align: center
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h4 class="header-title m-t-0 m-b-30" style="text-align:center"></h4>
+            <div class="row">
+
+                <!-- -------------------------------------------------------------------------------------------------- -->
+                <h2 style="text-align:center">طلبات التسوية</h2>
+
+                <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>الاسم</th>
+                            <th>رقم الجوال </th>
+                            <th>المبلغ</th>
+                            <th> التاريخ </th>
+                            <th> الحالة </th>
+                            <th>تغيير الحالة </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FKProvider.ProviderAditionalData.nameAr)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FKProvider.PhoneNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PayOutPrice)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+                                </td>
+
+                                <td>
+                                    @{
+                                        if (item.IsPaid == true)
+                                        {
+                                            <label id="@item.Id" style="color:green;font-size: 17px;">تم الدفع</label>
+                                        }
+                                        else
+                                        {
+                                            <label id="@item.Id" style="color:red;font-size: 17px;">لم يتم الدفع</label>
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <input type="button" value="تغيير الحالة" onclick="Validation(@item.Id)" class="btn btn-purple btn-rounded" />
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <!-- -------------------------------------------------------------------------------------------------- -->
+            </div><!-- end row -->
+        </div>
+    </div><!-- end col -->
+</div>
+
+@section scripts{
+    <script>
+
+        function Validation(id) {
+            $.ajax({
+                url: "/FinancialAccounts/ChangeState",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function (result) {
+
+                    if (result.data == true) {
+                        $('#' + id).css('color', 'green');
+                        $('#' + id).html('تم الدفع');
+                    } else if (result.data == false) {
+                        $('#' + id).css('color', 'red');
+                        $('#' + id).html('لم يتم الدفع');
+
+                    }
+                },
+                failure: function (info) {
+
+                }
+            });
+        }
+    </script>
+}

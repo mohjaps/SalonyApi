@@ -1,0 +1,57 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "تسجيل دخول";
+    Layout = "_Layout2";
+}
+
+
+
+<h2>@ViewData["Title"]</h2>
+
+<section>
+    <form method="post">
+
+        <hr />
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Input.Email">البريد الالكتروني</label>
+            <input asp-for="Input.Email" class="form-control" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.Password">كلمة المرور</label>
+            <input asp-for="Input.Password" class="form-control" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+
+        <input type="hidden" asp-for="Input.RememberMe" value="true" />
+
+        @*<div class="form-group">
+            <div class="">
+                <label asp-for="Input.RememberMe">
+                    <input  asp-for="Input.RememberMe" />
+                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                </label>
+            </div>
+        </div>*@
+        <div class="form-group">
+            <button type="submit" class="btn-new-style">دخول</button>
+        </div>
+       
+        <div class="form-group">
+            <p>
+                <a style="color: #08a8e6" asp-page="./ForgotPassword">هل نسيت كلمة المرور ؟</a>
+            </p>
+            @*<p>
+                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+            </p>*@
+        </div>
+    </form>
+</section>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

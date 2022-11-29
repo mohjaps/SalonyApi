@@ -1,0 +1,108 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "MadaPay";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
+    var checkOutId = ViewBag.Id;
+    var userId = ViewBag.userId;
+    var orderId = ViewBag.orderId;
+    var type = ViewBag.type;
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>check out</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-color: #f6f6f5;
+            padding-bottom: 0;
+        }
+
+        body, html {
+            background: #fff;
+            color: #fff;
+            font-family: 'JF-Flat-regular';
+        }
+
+        .wpwl-control, .wpwl-group-registration {
+            color: #000
+        }
+
+        .content-page .content {
+            margin-top: 0;
+        }
+
+        .button {
+            width: 100%
+        }
+
+        @@media (min-width: 550px) {
+            /* this rule applies only to devices with a minimum screen width of 480px */
+            .button {
+                width: 50%;
+            }
+        }
+
+        .input,
+        .button {
+            height: 44px;
+            width: 100%;
+        }
+
+
+        .topbar {
+            display: none;
+        }
+
+        .side-menu {
+            display: none;
+        }
+
+        .wpwl-form-card {
+            border-radius: 10px;
+            background-image: linear-gradient(30deg, rgb(99, 171, 109) 70%, rgba(255,255,255,0.2) 70%),linear-gradient(45deg, rgba(255,255,255,0) 75%, rgb(159, 112, 160) 75%),linear-gradient(60deg, rgb(135, 170, 65) 80%, rgb(27, 172, 192) 80%) !important;
+            background-color: silver;
+        }
+
+        body.fixed-left-void, body.mobile {
+            min-height: 400px;
+        }
+
+        #wrapper.enlarged .footer {
+            display: none
+        }
+
+        .wpwl-button.wpwl-button-pay {
+            min-width: 200px;
+            color: #fff !important;
+            opacity: 1;
+            padding: 7px;
+            border: none;
+            font-size: 16px;
+            background-image: linear-gradient(to right, #15acc7, #abaa17, #9e6bac ) !important;
+            margin: 10px auto;
+            display: block;
+            font-weight: 600;
+            color: #fff;
+            border-radius: 9px;
+            transition: all .4s ease-in-out;
+            float: none;
+        }
+    </style>
+</head>
+<body>
+    <form action="/PaymentHayaa/MadaWebSubmit?userId=@userId&orderId=@orderId&type=@type&/" class="paymentWidgets" data-brands="MADA VISA MASTER">
+    </form>
+    <script>
+        var wpwlOptions = { style: "card" }
+    </script>
+
+    <!-- for test -->
+    @*<script src="https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=@checkOutId"></script>*@
+    <!-- for life -->
+    <script src="https://oppwa.com/v1/paymentWidgets.js?checkoutId=@checkOutId"></script>
+
+</body>
+</html>

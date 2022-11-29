@@ -1,0 +1,253 @@
+﻿@model IEnumerable<Core.TableDb.Orders>
+
+@{
+    ViewData["Title"] = "SlonyNewOrders";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h4 class="header-title m-t-0 m-b-30"></h4>
+            <div class="row">
+
+                <!-- -------------------------------------------------------------------------------------------------- -->
+                @*<p>
+                        @Html.ActionLink("اضافة طلب جديد", "Create", "DOrders", new { id = ViewData["id"] }, new { @class = "btn btn-primary btn-rounded w-md waves-effect waves-light m-b-5" })
+                    </p>*@
+                <h2 style="text-align:center">الطلبات</h2>
+
+                <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <thead style="text-align:center">
+                        <tr>
+                            <th style="text-align:center">
+                                #
+                            </th>
+                            <th style="text-align:center">
+                                التاريخ
+                            </th>
+                            <th style="text-align:center">
+                                اسم العميل
+                            </th>
+                            <th style="text-align:center">
+                                رقم جوال العميل
+                            </th>
+                            <th style="text-align:center">
+                                اسم المشغل
+                            </th>
+                            <th style="text-align:center">
+                                رقم جوال المشغل
+                            </th>
+                            <th style="text-align:center">
+                                الحالة
+                            </th>
+                            @*<th style="text-align:center">
+            تغيير الحالة
+        </th>*@
+                            <th style="text-align:center">
+                                طريقة الدفع
+                            </th>
+                            <th style="text-align:center">
+                                كوبون
+                            </th>
+                            <th style="text-align:center">
+                                نسبة الخصم
+                            </th>
+                            <th style="text-align:center">
+                                السعر قبل الخصم
+                            </th>
+                            <th style="text-align:center">
+                                السعر
+                            </th>
+                            <th style="text-align:center">
+                                مدفوع
+                            </th>
+                            <th style="text-align:center">
+                                التقييم
+                            </th>
+                            <th style="text-align:center">
+                                سبب الرفض او الالغاء
+                            </th>
+                            <th style="text-align:center">
+                                صورة الايصال
+                            </th>
+                            <th style="text-align:center">
+                                قبول الايصال
+                            </th>
+                            <th style="text-align:center">
+                                رفض الايصال
+                            </th>
+                            <td>
+                                تفاصيل الطلب
+                            </td>
+                            @*<th style="text-align:center">
+            تعديل
+        </th>*@
+                        </tr>
+                    </thead>
+                    <tbody style="text-align:center">
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                @item.ID
+                            </td>
+                            <td>
+                                @*@item.date.ToString("hh:mm tt")*@
+                                @item.date
+                            </td>
+                            <td>
+                                @item.FK_User.fullName
+                            </td>
+                            <td>
+                                @item.FK_User.PhoneNumber
+                            </td>
+                            <td>
+                                @item.FK_Provider.nameAr
+                            </td>
+                            <td>
+                                @item.FK_Provider.FK_User.PhoneNumber
+                            </td>
+                            <td>
+
+                                @if (item.status == (int)Salony.Enums.AllEnums.OrderStates.waiting)
+                                {
+                                    <label id="@item.ID" style="color:green;font-size: 17px;">انتظار</label>
+                                }
+                                else @if (item.status == (int)Salony.Enums.AllEnums.OrderStates.accepted)
+                           {
+                            <label id="@item.ID" style="color:green;font-size: 17px;">مقبول</label>
+                        }
+                        else @if (item.status == (int)Salony.Enums.AllEnums.OrderStates.finished)
+                           {
+                            <label id="@item.ID" style="color:green;font-size: 17px;">منتهى</label>
+                        }
+                        else @if (item.status == (int)Salony.Enums.AllEnums.OrderStates.refused)
+                           {
+                            <label id="@item.ID" style="color:green;font-size: 17px;">مرفوض</label>
+                        }
+                        else @*@if (item.status == (int)Salony.Enums.AllEnums.OrderStates.canceled)*@
+                        {
+                            <label id="@item.ID" style="color:green;font-size: 17px;">ملغى</label>
+                        }
+                        </td>
+                        @*<td>
+        <input type="button" value="تغيير الحالة" onclick="ChangeStatus('@item.ID')" class="btn btn-purple btn-rounded" />
+    </td>*@
+                        <td>
+                            @{
+                                if (@item.typePay == 0)
+                                {
+                                    <label style="color:green;font-size: 17px;">كاش</label>
+                                }
+                                else
+                                {
+                                    <label style="color:green;font-size: 17px;">أون لاين</label>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @item.copon
+                        </td>
+                        <td>
+                            @item.discountPercentage
+                        </td>
+                        <td>
+                            @item.priceBeforeDisc
+                        </td>
+                        <td>
+                            @item.price
+                        </td>
+                        <td>
+                            @{
+                                if (item.paid == true)
+                                {
+                                    <label id="@item.ID" style="color:green;font-size: 17px;">مدفوغ</label>
+                                }
+                                else
+                                {
+                                    <label id="@item.ID" style="color:red;font-size: 17px;">غير مدفوع</label>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @item.rate
+                        </td>
+                        <td>
+                            @item.refusedReason
+                        </td>
+                        <td>
+                            <a data-fancybox="gallery-@item.ID" href="@Salony.Helper.Helper.BaseUrlHoste@item.ApplicationpercentageImg">
+                                <img src="@Salony.Helper.Helper.BaseUrlHoste@item.ApplicationpercentageImg" style="width:80px;height:80px">
+                            </a>
+
+                            @*<img src="@Salony.Helper.Helper.BaseUrlHoste@item.ApplicationpercentageImg" style="width:80px;height:80px" />*@
+                        </td>
+                        <td>
+                            @if (!item.Applicationpercentagepaid)
+                            {
+                                <input type="button" value="قبول الايصال" onclick="acceptApplicationpercentageImg('@item.ID')" class="btn btn-danger btn-rounded" />
+                            }
+                            else
+                            {
+                                <input type="button" value="قبول الايصال" class="btn btn-purple btn-rounded" disabled />
+                            }
+                        </td>
+                        <td>
+                            @if (!item.Applicationpercentagepaid)
+                            {
+                                <input type="button" value="رفض الايصال" onclick="refuseApplicationpercentageImg('@item.ID')" class="btn btn-danger btn-rounded" />
+                            }
+                            else
+                            {
+                                <input type="button" value="رفض الايصال" class="btn btn-purple btn-rounded" disabled />
+                            }
+                        </td>
+                        <td>
+                            <a asp-controller="DOrders" asp-action="OrderDetails" asp-route-id="@item.ID">تفاصيل الطلب</a>
+                        </td>
+
+                        @*<td>
+        <a class="icon-font btn" asp-action="Edit" asp-route-id="@item.ID">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+
+        </a>
+    </td>*@
+                        </tr>
+                }
+                    </tbody>
+
+                </table>
+            </div><!-- end row -->
+        </div>
+    </div><!-- end col -->
+</div>
+
+
+
+@section scripts{
+    <script src="~/assets/js/jquery.fancybox.min.js"></script>
+    <script>
+        function acceptApplicationpercentageImg(id) {
+            $.post('/DOrders/acceptApplicationpercentageImg', { id: id }, function (response) {
+                if (response.key == 1) {
+                    location.reload();
+                } else {
+                    toastr.error("حدث خطأ");
+                }
+            });
+        }
+
+        function refuseApplicationpercentageImg(id) {
+            $.post('/DOrders/RefuseApplicationpercentageImg', { id: id }, function (response) {
+                if (response.key == 1) {
+                    location.reload();
+                } else {
+                    toastr.error("حدث خطأ");
+                }
+            });
+        }
+
+
+    </script>
+
+}
