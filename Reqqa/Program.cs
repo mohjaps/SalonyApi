@@ -1,14 +1,12 @@
 using Core.TableDb;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using static NetEscapades.Extensions.Logging.RollingFile.PeriodicityOptions;
 
 namespace Salony
 {
@@ -16,20 +14,31 @@ namespace Salony
     {
         public static async Task Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
+            IHost host = CreateHostBuilder(args)
+                .ConfigureLogging(log =>
+                {
+                    log.AddFile(file =>
+                    {
+                        file.FileName = $"Log";
+                        file.LogDirectory = "Logs";
+                        file.Extension = "txt";
+                        file.Periodicity = Daily;
+                    });
+                })
+                .Build();
 
-            using (var scope = host.Services.CreateScope())
+            using (IServiceScope scope = host.Services.CreateScope())
             {
-                var services = scope.ServiceProvider;
+                IServiceProvider services = scope.ServiceProvider;
                 try
                 {
-                    var userManager = services.GetRequiredService<UserManager<ApplicationDbUser>>();
-                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    UserManager<ApplicationDbUser> userManager = services.GetRequiredService<UserManager<ApplicationDbUser>>();
+                    RoleManager<IdentityRole> roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
                     await Salony.Seeds.DefaultRoles.SeedAsync(userManager, roleManager);
                     await Salony.Seeds.DefaultBasicUser.SeedAsync(userManager, roleManager);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
 
                 }
